@@ -5,12 +5,36 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.17e50649.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-  <script type="module" crossorigin src="/assets/index.6b0c9ffb.js"></script>
-  <link rel="modulepreload" href="/assets/vendor.0afd51b2.js">
-  <link rel="stylesheet" href="/assets/index.5c431c36.css">
+  <script type="module" crossorigin src="/assets/index.9f14628b.js"></script>
+  <link rel="modulepreload" href="/assets/vendor.c53b4725.js">
+  <link rel="stylesheet" href="/assets/index.32baf4b7.css">
 </head>
   <body>
     <canvas id="bg"></canvas>
     
+    <main>
+      <button id="ui-toggle-button"></button>
+      <container id="container"> 
+        <!-- Time slider -->
+        <div id="time-slider-container">
+          <div id="time-slider-output">
+            <p id="timeSliderOutput"></p>
+          </div>
+          <div class="time-slider">
+            <input type="range" min="1" max="5000" value="50" class="slider" id="timeSlider">
+          </div>
+        </div>
+
+        <!-- Toggle buttons -->
+        <button class= "toggle-button" id="guidelines-toggle-button"> Guide lines </button>
+        <button class= "toggle-button" id="add-planet-toggle-button"> Add planet </button>
+        <button class= "toggle-button" id="show-grid-toggle-button"> Show grid </button>
+
+        <!-- Add planet menu -->
+        <div class="menu-container" id="add-planet-menu-container">
+
+        </div>
+      </container>
+    </main>
   </body>
 </html>
