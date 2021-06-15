@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.17e50649.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  <script type="module" crossorigin src="/assets/index.59c8ef31.js"></script>
-  <link rel="modulepreload" href="/assets/vendor.c53b4725.js">
-  <link rel="stylesheet" href="/assets/index.bbd0e61a.css">
+    <title>Solarsystem</title>
+  <script type="module" crossorigin src="/assets/index.97fe9502.js"></script>
+  <link rel="modulepreload" href="/assets/vendor.8f320445.js">
+  <link rel="stylesheet" href="/assets/index.51af3af8.css">
 </head>
   <body>
     <canvas id="bg"></canvas>
@@ -15,23 +15,31 @@
     <main>
       <button id="ui-toggle-button"></button>
       <container id="container"> 
+        <!-- Planet list -->
+        <div id="planet-list-container" class = "no-selec">
+        </div>
+
         <!-- Time slider -->
         <div id="time-slider-container" class="no-selec">
           <div id="time-slider-output">
             <p id="timeSliderOutput"></p>
           </div>
           <div class="time-slider">
-            <input type="range" min="1" max="100" value="10" class="slider" id="timeSlider">
+            <input type="range" min="0" max="100" value="1" class="slider" id="timeSlider">
           </div>
         </div>
 
         <!-- Toggle buttons -->
-        <button class= "toggle-button" id="guidelines-toggle-button"> Guide lines </button>
-        <button class= "toggle-button" id="add-planet-toggle-button"> Add planet </button>
-        <button class= "toggle-button" id="show-grid-toggle-button"> Show grid </button>
-
+        <button class= "toggle-button button" id="guidelines-toggle-button"> Guide lines </button>
+        <button class= "toggle-button button" id="add-planet-toggle-button"> Add planet </button>
+        
         <!-- Add planet menu -->
         <div class="menu-container" id="add-planet-menu-container">
+
+        </div>
+
+        <!-- Info panel -->
+        <div class="menu-container" id="info-panel-container">
 
         </div>
       </container>
