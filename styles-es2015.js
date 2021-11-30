@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLDhFQUE4RSIsImZpbGUiOiJzcmMvc3R5bGVzLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIFlvdSBjYW4gYWRkIGdsb2JhbCBzdHlsZXMgdG8gdGhpcyBmaWxlLCBhbmQgYWxzbyBpbXBvcnQgb3RoZXIgc3R5bGUgZmlsZXMgKi9cclxuIl19 */", '', '']]
+module.exports = [[module.i, "body {\n    margin: 0;\n}  \n\n.time-slider .ngx-slider .ngx-slider-bubble {\n    color: snow !important;\n}  \n\n.time-slider .ngx-slider .ngx-slider-pointer {\n    background-color: lightskyblue;\n}  \n\n.time-slider .ngx-slider .ngx-slider-pointer.ngx-slider-active:after {\n    background-color: white;\n}  \n\n.scale-slider .ngx-slider .ngx-slider-bubble {\n    color: snow !important;\n}  \n\n.scale-slider .ngx-slider .ngx-slider-pointer {\n    background-color: lightskyblue;\n}  \n\n.scale-slider .ngx-slider .ngx-slider-pointer.ngx-slider-active:after {\n    background-color: white;\n}  \n\n:focus-visible {\n    outline: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksU0FBUztBQUNiOztBQUVBO0lBQ0ksc0JBQXNCO0FBQzFCOztBQUVBO0lBQ0ksOEJBQThCO0FBQ2xDOztBQUVBO0lBQ0ksdUJBQXVCO0FBQzNCOztBQUVBO0lBQ0ksc0JBQXNCO0FBQzFCOztBQUVBO0lBQ0ksOEJBQThCO0FBQ2xDOztBQUVBO0lBQ0ksdUJBQXVCO0FBQzNCOztBQUVBO0lBQ0ksYUFBYTtBQUNqQiIsImZpbGUiOiJzcmMvc3R5bGVzLmNzcyIsInNvdXJjZXNDb250ZW50IjpbImJvZHkge1xuICAgIG1hcmdpbjogMDtcbn0gIFxuXG4udGltZS1zbGlkZXIgLm5neC1zbGlkZXIgLm5neC1zbGlkZXItYnViYmxlIHtcbiAgICBjb2xvcjogc25vdyAhaW1wb3J0YW50O1xufVxuXG4udGltZS1zbGlkZXIgLm5neC1zbGlkZXIgLm5neC1zbGlkZXItcG9pbnRlciB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRza3libHVlO1xufVxuXG4udGltZS1zbGlkZXIgLm5neC1zbGlkZXIgLm5neC1zbGlkZXItcG9pbnRlci5uZ3gtc2xpZGVyLWFjdGl2ZTphZnRlciB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG59XG5cbi5zY2FsZS1zbGlkZXIgLm5neC1zbGlkZXIgLm5neC1zbGlkZXItYnViYmxlIHtcbiAgICBjb2xvcjogc25vdyAhaW1wb3J0YW50O1xufVxuXG4uc2NhbGUtc2xpZGVyIC5uZ3gtc2xpZGVyIC5uZ3gtc2xpZGVyLXBvaW50ZXIge1xuICAgIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0c2t5Ymx1ZTtcbn1cblxuLnNjYWxlLXNsaWRlciAubmd4LXNsaWRlciAubmd4LXNsaWRlci1wb2ludGVyLm5neC1zbGlkZXItYWN0aXZlOmFmdGVyIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbn1cblxuOmZvY3VzLXZpc2libGUge1xuICAgIG91dGxpbmU6IG5vbmU7XG59Il19 */", '', '']]
 
 /***/ }),
 
@@ -338,9 +338,10 @@ if (content.locals) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\jorri\Documents\GitHub\MyWebsite\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! /Users/jorritschepers/Documents/Projects/SolarSim/src/styles.css */"./src/styles.css");
 
 
 /***/ })
 
 },[[3,"runtime"]]]);
+//# sourceMappingURL=styles-es2015.js.map
