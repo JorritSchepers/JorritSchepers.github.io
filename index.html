@@ -1,48 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.17e50649.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Solarsystem</title>
-  <script type="module" crossorigin src="/assets/index.97fe9502.js"></script>
-  <link rel="modulepreload" href="/assets/vendor.8f320445.js">
-  <link rel="stylesheet" href="/assets/index.51af3af8.css">
+<head>
+  <meta charset="utf-8">
+  <title>SolarSim2</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-  <body>
-    <canvas id="bg"></canvas>
-    
-    <main>
-      <button id="ui-toggle-button"></button>
-      <container id="container"> 
-        <!-- Planet list -->
-        <div id="planet-list-container" class = "no-selec">
-        </div>
-
-        <!-- Time slider -->
-        <div id="time-slider-container" class="no-selec">
-          <div id="time-slider-output">
-            <p id="timeSliderOutput"></p>
-          </div>
-          <div class="time-slider">
-            <input type="range" min="0" max="100" value="1" class="slider" id="timeSlider">
-          </div>
-        </div>
-
-        <!-- Toggle buttons -->
-        <button class= "toggle-button button" id="guidelines-toggle-button"> Guide lines </button>
-        <button class= "toggle-button button" id="add-planet-toggle-button"> Add planet </button>
-        
-        <!-- Add planet menu -->
-        <div class="menu-container" id="add-planet-menu-container">
-
-        </div>
-
-        <!-- Info panel -->
-        <div class="menu-container" id="info-panel-container">
-
-        </div>
-      </container>
-    </main>
-  </body>
+<body>
+  <my-app></my-app>
+<script src="runtime-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule defer></script><script src="polyfills-es5.js" nomodule defer></script><script src="polyfills-es2015.js" type="module"></script><script src="styles-es2015.js" type="module"></script><script src="styles-es5.js" nomodule defer></script><script src="vendor-es2015.js" type="module"></script><script src="vendor-es5.js" nomodule defer></script><script src="main-es2015.js" type="module"></script><script src="main-es5.js" nomodule defer></script></body>
 </html>
