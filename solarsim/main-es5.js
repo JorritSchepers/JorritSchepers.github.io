@@ -874,38 +874,38 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "initTheSolarSystem",
         value: function initTheSolarSystem() {
-          var moonTextureMap = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/moon-map.jpg');
-          this.sun = this.addPlanet('Sun', SUN_RADIUS / this.SUN_RADIUS_RATIO, 40, 0, 0, 0, 0, true, 0, null, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/sun-map.jpg'), 28 * 24);
+          var moonTextureMap = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg');
+          this.sun = this.addPlanet('Sun', SUN_RADIUS / this.SUN_RADIUS_RATIO, 40, 0, 0, 0, 0, true, 0, null, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/sun-map.jpg'), 28 * 24);
           this.sun.model.layers.enable(BLOOM_SCENE);
-          this.addPlanet('Mercury', 2440, 20, 0x777777, 57910000, 3.38, 2, false, 88, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/mercury-map.jpg'), 59 * 24);
-          this.addPlanet('Venus', 6052, 20, 0x7A381C, 108200000, 3.86, 2.7, false, 225, true, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/venus-map.jpg'), 243 * 24);
-          var earth = this.addPlanet('Earth', 6371, 20, 0x243E49, 149600000, 7.155, 23.4, false, 365, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/earth-map2.jpg'), 24);
+          this.addPlanet('Mercury', 2440, 20, 0x777777, 57910000, 3.38, 2, false, 88, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/mercury-map.jpg'), 59 * 24);
+          this.addPlanet('Venus', 6052, 20, 0x7A381C, 108200000, 3.86, 2.7, false, 225, true, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/venus-map.jpg'), 243 * 24);
+          var earth = this.addPlanet('Earth', 6371, 20, 0x243E49, 149600000, 7.155, 23.4, false, 365, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/earth-map2.jpg'), 24);
           earth.addMoon('Moon', 1737, 20, 0x777777, 384400, 5.14, false, 27, true, moonTextureMap);
-          var mars = this.addPlanet('Mars', 3390, 20, 0xAC6349, 227900000, 5.65, 25, false, 687, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/mars-map.jpg'), 24.6);
+          var mars = this.addPlanet('Mars', 3390, 20, 0xAC6349, 227900000, 5.65, 25, false, 687, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/mars-map.jpg'), 24.6);
           mars.addMoon("Phobos", 11.1, 20, 0x777777, 9377, 1.093, false, 0.463, true, moonTextureMap);
           mars.addMoon("Deimons", 6.3, 20, 0x777777, 23460, 0.93, false, 5.44, true, moonTextureMap);
-          var jupiter = this.addPlanet('Jupiter', 69911, 20, 0x9F8E7A, 778500000, 6.09, 3, false, 4332, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/jupiter-map.jpg'), 9.5);
-          jupiter.addMoon('Ganymede', 5268 / 2, 20, 0x999999, 1070412, 0.204, false, 7.1546, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/moon-map.jpg'));
-          jupiter.addMoon('Callisto', 4820 / 2, 20, 0x555555, 1882709, 0.205, false, 16.689, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/moon-map.jpg'));
-          jupiter.addMoon('Io', 3643 / 2, 20, 0xD0C757, 421700, 0.050, false, 1.7691, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/moon-map.jpg'));
-          jupiter.addMoon('Europa', 3121 / 2, 20, 0x856033, 671034, 0.471, false, 3.5512, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/moon-map.jpg'));
-          var saturn = this.addPlanet('Saturn', 58232, 20, 0xB2915F, 1434000000, 5.51, 26.73, false, 10757, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/saturn-map.jpg'), 10.5);
-          saturn.addRing(136780, 136780 - 74500, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/rings.png'));
+          var jupiter = this.addPlanet('Jupiter', 69911, 20, 0x9F8E7A, 778500000, 6.09, 3, false, 4332, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/jupiter-map.jpg'), 9.5);
+          jupiter.addMoon('Ganymede', 5268 / 2, 20, 0x999999, 1070412, 0.204, false, 7.1546, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
+          jupiter.addMoon('Callisto', 4820 / 2, 20, 0x555555, 1882709, 0.205, false, 16.689, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
+          jupiter.addMoon('Io', 3643 / 2, 20, 0xD0C757, 421700, 0.050, false, 1.7691, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
+          jupiter.addMoon('Europa', 3121 / 2, 20, 0x856033, 671034, 0.471, false, 3.5512, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
+          var saturn = this.addPlanet('Saturn', 58232, 20, 0xB2915F, 1434000000, 5.51, 26.73, false, 10757, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/saturn-map.jpg'), 10.5);
+          saturn.addRing(136780, 136780 - 74500, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/rings.png'));
           saturn.addMoon("Titan", 5149 / 2, 20, 0x777777, 1221870, 0.349, false, 16, true, moonTextureMap);
           saturn.addMoon("Rhea", 1527 / 2, 20, 0x777777, 527108, 0.327, false, 4.5, true, moonTextureMap);
           saturn.addMoon("Lapetus", 1470 / 2, 20, 0x777777, 3560820, 15.470, false, 79, true, moonTextureMap);
           saturn.addMoon("Dione", 1123 / 2, 20, 0x777777, 377396, 0.002, false, 2.7, true, moonTextureMap);
           saturn.addMoon("Tethys", 1062 / 2, 20, 0x777777, 294619, 0.168, false, 1.9, true, moonTextureMap);
           saturn.addMoon("Enceladus", 504 / 2, 20, 0x777777, 237948, 0.010, false, 1.4, true, moonTextureMap);
-          saturn.addMoon("Mimas", 396 / 2, 20, 0x777777, 185539, 1.566, false, 0.9, true, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/mimas-map.png'));
-          var uranus = this.addPlanet('Uranus', 25362, 20, 0x8EB2C4, 2871000000, 6.48, 97.77, false, 30687, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/uranus-map.jpg'), 7.25); // uranus.addRing(103000, 103000 - 34890, new THREE.TextureLoader().load('../assets/maps/uranus-rings.png'))
+          saturn.addMoon("Mimas", 396 / 2, 20, 0x777777, 185539, 1.566, false, 0.9, true, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/mimas-map.png'));
+          var uranus = this.addPlanet('Uranus', 25362, 20, 0x8EB2C4, 2871000000, 6.48, 97.77, false, 30687, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/uranus-map.jpg'), 7.25); // uranus.addRing(103000, 103000 - 34890, new THREE.TextureLoader().load('./solarsim/assets/maps/uranus-rings.png'))
 
           uranus.addMoon("Titania", 1576 / 2, 20, 0x777777, 435910, 0.340, false, 8.7, true, moonTextureMap);
           uranus.addMoon("Oberon", 1522 / 2, 20, 0x777777, 583520, 0.058, false, 13.4, true, moonTextureMap);
           uranus.addMoon("Umbriel", 1169 / 2, 20, 0x777777, 266300, 0.205, false, 4.1, true, moonTextureMap);
           uranus.addMoon("Ariel", 1157 / 2, 20, 0x777777, 191020, 0.260, false, 2.5, true, moonTextureMap);
           uranus.addMoon("Miranda", 471 / 2, 20, 0x777777, 129390, 4.232, false, 1.4, true, moonTextureMap);
-          var neptune = this.addPlanet('Neptune', 24622, 20, 0x4662F6, 4495000000, 6.43, 28, false, 60190, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('../assets/maps/neptune-map.jpg'), 16);
+          var neptune = this.addPlanet('Neptune', 24622, 20, 0x4662F6, 4495000000, 6.43, 28, false, 60190, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/neptune-map.jpg'), 16);
           neptune.addMoon("Triton", 2705 / 2, 20, 0x777777, 354759, 180 - 156.865, false, 5.8, true, moonTextureMap);
         }
       }, {
@@ -1576,9 +1576,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _assets_starsJson__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! ../../assets/starsJson */
-    "./src/assets/starsJson.ts");
+    var _solarsim_assets_starsJson__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../solarsim/assets/starsJson */
+    "./src/solarsim/assets/starsJson.ts");
     /* harmony import */
 
 
@@ -1613,7 +1613,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function init() {
           var _this9 = this;
 
-          new _assets_starsJson__WEBPACK_IMPORTED_MODULE_1__["Stars"]().stars.forEach(function (s) {
+          new _solarsim_assets_starsJson__WEBPACK_IMPORTED_MODULE_1__["Stars"]().stars.forEach(function (s) {
             var threshold = 5;
             var red = "rgb(255, 150, 150)";
             var blue = "rgb(180, 180, 255)";
@@ -2191,15 +2191,113 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
-  "./src/assets/starsJson.ts":
-  /*!*********************************!*\
-    !*** ./src/assets/starsJson.ts ***!
-    \*********************************/
+  "./src/environments/environment.ts":
+  /*!*****************************************!*\
+    !*** ./src/environments/environment.ts ***!
+    \*****************************************/
+
+  /*! exports provided: environment */
+
+  /***/
+  function srcEnvironmentsEnvironmentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "environment", function () {
+      return environment;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js"); // This file can be replaced during build by using the `fileReplacements` array.
+    // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+    // The list of file replacements can be found in `angular.json`.
+
+
+    var environment = {
+      production: false
+    };
+    /*
+     * For easier debugging in development mode, you can import the following file
+     * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+     *
+     * This import should be commented out in production mode because it will have a negative impact
+     * on performance if an error is thrown.
+     */
+    // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+    /***/
+  },
+
+  /***/
+  "./src/main.ts":
+  /*!*********************!*\
+    !*** ./src/main.ts ***!
+    \*********************/
+
+  /*! no exports provided */
+
+  /***/
+  function srcMainTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/platform-browser-dynamic */
+    "./node_modules/@angular/platform-browser-dynamic/fesm2015/platform-browser-dynamic.js");
+    /* harmony import */
+
+
+    var _app_app_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ./app/app.module */
+    "./src/app/app.module.ts");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./environments/environment */
+    "./src/environments/environment.ts");
+
+    if (_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].production) {
+      Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["enableProdMode"])();
+    }
+
+    Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"])["catch"](function (err) {
+      return console.error(err);
+    });
+    /***/
+  },
+
+  /***/
+  "./src/solarsim/assets/starsJson.ts":
+  /*!******************************************!*\
+    !*** ./src/solarsim/assets/starsJson.ts ***!
+    \******************************************/
 
   /*! exports provided: Stars */
 
   /***/
-  function srcAssetsStarsJsonTs(module, __webpack_exports__, __webpack_require__) {
+  function srcSolarsimAssetsStarsJsonTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
@@ -44223,104 +44321,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     };
     /***/
 
-  },
-
-  /***/
-  "./src/environments/environment.ts":
-  /*!*****************************************!*\
-    !*** ./src/environments/environment.ts ***!
-    \*****************************************/
-
-  /*! exports provided: environment */
-
-  /***/
-  function srcEnvironmentsEnvironmentTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "environment", function () {
-      return environment;
-    });
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js"); // This file can be replaced during build by using the `fileReplacements` array.
-    // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-    // The list of file replacements can be found in `angular.json`.
-
-
-    var environment = {
-      production: false
-    };
-    /*
-     * For easier debugging in development mode, you can import the following file
-     * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
-     *
-     * This import should be commented out in production mode because it will have a negative impact
-     * on performance if an error is thrown.
-     */
-    // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
-    /***/
-  },
-
-  /***/
-  "./src/main.ts":
-  /*!*********************!*\
-    !*** ./src/main.ts ***!
-    \*********************/
-
-  /*! no exports provided */
-
-  /***/
-  function srcMainTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
-    /* harmony import */
-
-
-    var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @angular/platform-browser-dynamic */
-    "./node_modules/@angular/platform-browser-dynamic/fesm2015/platform-browser-dynamic.js");
-    /* harmony import */
-
-
-    var _app_app_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! ./app/app.module */
-    "./src/app/app.module.ts");
-    /* harmony import */
-
-
-    var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-    /*! ./environments/environment */
-    "./src/environments/environment.ts");
-
-    if (_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].production) {
-      Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["enableProdMode"])();
-    }
-
-    Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"])["catch"](function (err) {
-      return console.error(err);
-    });
-    /***/
   },
 
   /***/
