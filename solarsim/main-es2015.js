@@ -971,7 +971,7 @@ class NightSkyController {
         ];
         this.constellations = [];
         this.n = 1;
-        this.map = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./assets/maps/star-map.png');
+        this.map = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/star-map.png');
         this.app = app;
     }
     init() {
