@@ -1,0 +1,90 @@
+body {
+    /*Background gradient of black to a little lighter from top left*/
+    background: linear-gradient(315deg, #000000 0%, #1a1a1a 100%);
+    background-image: url("https://rare-gallery.com/uploads/posts/385181-4k-wallpaper.jpg");
+    /*Background image is fixed*/
+    background-attachment: fixed;
+    /*Background image is centered*/
+    background-position: center;
+    /*Background image is not repeated*/
+    background-repeat: no-repeat;
+    /*Background image is scaled to cover the entire container*/
+    background-size: cover;
+    /*Background image is darkened with a black overlay*/
+    background-blend-mode: multiply;
+
+    /* background-color: black; */
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    /* Font */
+    font-family: 'Comfortaa', cursive;
+    font-family: 'M PLUS 1', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: snow;
+}
+
+.title {
+    font-size: 100px;
+    color: white;
+    text-align: center;
+    margin: 40px;
+}
+
+#items-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 90%;
+    /* margin-top: 5%; */
+    margin-left: 5%;
+    padding: 0;
+}
+
+.item {
+    width: 40vw;
+    height: 30vh;
+    margin: 20px;
+
+    /* Background */
+    background: rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, .4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    color: snow;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: .3s;
+}
+
+.item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, .6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: .3s;
+    /*Enlarge the div by 10%*/
+    transform: scale(1.05);
+}
+
+@media screen and (max-width: 768px) {
+    .item {
+        width: 80vw;
+        height: 30vh;
+    }
+}
