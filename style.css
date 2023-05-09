@@ -71,6 +71,10 @@ a {
     transition: .3s;
 }
 
+.item h1 {
+    font-size: 36px;
+}
+
 .item:hover {
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 4px 30px rgba(0, 0, 0, .6);
@@ -82,9 +86,17 @@ a {
     transform: scale(1.05);
 }
 
-@media screen and (max-width: 768px) {
+@media (pointer: coarse) {
     .item {
         width: 80vw;
-        height: 30vh;
+        height: 25vh;
+    }
+
+    .item h1 {
+        font-size: 70px;
+    }
+
+    .item p {
+        font-size: 36px;
     }
 }
