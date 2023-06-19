@@ -32,7 +32,7 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<canvas id=\"bg\"></canvas>\n<main>\n    <button id=\"ui-toggle-button\" class=\"button no-selec\" *ngIf=\"!ui.showUI\" (click)=\"ui.toggleUI()\"> Show UI </button>\n    <div id=\"container\" *ngIf=\"ui.showUI\">\n        <!-- Header -->\n        <div id=\"header\" class=\"panel no-selec\">\n            <div>\n                <span id=\"distance-display\"> Distance to the sun: {{getDistanceDisplay(unit)}} {{unit}} </span>\n            </div>\n            <div>\n                <span id=\"day-display\"> Day: {{dayDisplay}} </span>\n            </div>\n            <div style=\"cursor: pointer;\">\n                <span id=\"distance-display\" (click)=\"ui.toggleSettings()\"> Settings </span>\n            </div>\n        </div>\n\n        <!-- Navigator -->\n        <div class=\"nav-button panel no-selec\" id=\"nav-open\"\n            (click)=\"ui.showNav = true; showContactPage = false; showInfoPanel = false;\" *ngIf=\"!ui.showNav\">\n            <div>&#x25B2;</div>\n        </div>\n        <div class=\"nav-button panel no-selec\" id=\"nav-close\" (click)=\"ui.showNav = false\" *ngIf=\"ui.showNav\">\n            <div>&#x25BC;</div>\n        </div>\n        <div id=\"nav-container\" class=\"panel no-selec\" *ngIf=\"ui.showNav\">\n            <div class=\"panel-title\">\n                <div *ngIf=\"ui.navCurrentPage != 0\" (click)=\"ui.navCurrentPage = ui.navCurrentPage - 1\"> &lt; </div>\n                <div *ngIf=\"ui.navCurrentPage == 0\"> &nbsp; </div>\n                <span *ngIf=\"ui.navCurrentPage == 0\">Systems</span>\n                <span *ngIf=\"ui.navCurrentPage == 1\">Planets</span>\n                <span *ngIf=\"ui.navCurrentPage == 2 && getPlanet(followPlanetName).moonOf == null\"\n                    style=\"font-size: large\" (click)=\"ui.showInfoPanel = true\">Moons ({{followPlanetName}})</span>\n                <span *ngIf=\"ui.navCurrentPage == 2 && getPlanet(followPlanetName).moonOf != null\"\n                    style=\"font-size: large\">Moons ({{getPlanet(followPlanetName).moonOf.name}})</span>\n                <div *ngIf=\"ui.navCurrentPage == 0\" (click)=\"addNewSystem()\"> + </div>\n                <div *ngIf=\"ui.navCurrentPage == 1 && !ui.showPlanetbuilder\"\n                    (click)=\"ui.showPlanetbuilder = !ui.showPlanetbuilder\"> + </div>\n                <div *ngIf=\"ui.navCurrentPage == 1 && ui.showPlanetbuilder\"\n                    (click)=\"ui.showPlanetbuilder = !ui.showPlanetbuilder\"> - </div>\n                <div *ngIf=\"ui.navCurrentPage == 2\"> &nbsp; </div>\n            </div>\n            <div class=\"panel-body\" style=\"flex-direction: column;\">\n                <!-- Systems list -->\n                <div style=\"width: 100%; height: 100%;\" *ngIf=\"ui.navCurrentPage == 0\">\n                    <div class=\"nav-list-item\" *ngFor=\"let system of systems\"\n                        (click)=\"switchToSystem(getSystemIndex(system.name))\">\n                        <span>{{system.name}}</span>\n                    </div>\n                </div>\n\n                <!-- Planets list -->\n                <div style=\"width: 100%; height: 100%;\" *ngIf=\"ui.navCurrentPage == 1\">\n                    <div class=\"nav-list-item\" (click)=\"flyToPlanet(sun.name)\">\n                        <span>{{sun.name}}</span>\n                    </div>\n                    <div class=\"nav-list-item\" *ngFor=\"let planet of systems[currentSystem].planets\"\n                        (click)=\"flyToPlanet(planet.name)\">\n                        <span>{{planet.name}}</span>\n                    </div>\n                </div>\n\n                <!-- Moons list -->\n                <div style=\"width: 100%; height: 100%;\" *ngIf=\"ui.navCurrentPage == 2\">\n                    <div style=\"width: 100%; height: 100%;\" *ngIf=\"getPlanet(followPlanetName).moonOf == null\">\n                        <div class=\"nav-list-item\" *ngFor=\"let moon of getPlanet(followPlanetName).moons\"\n                            (click)=\"flyToPlanet(moon.name)\">\n                            <span>{{moon.name}}</span>\n                        </div>\n                    </div>\n                    <div style=\"width: 100%; height: 100%;\" *ngIf=\"getPlanet(followPlanetName).moonOf != null\">\n                        <div class=\"nav-list-item\" *ngFor=\"let moon of getPlanet(followPlanetName).moonOf.moons\"\n                            (click)=\"flyToPlanet(moon.name)\">\n                            <span>{{moon.name}}</span>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <!-- Planetbuilder panel -->\n        <div id=\"planetbuilder-container\" class=\"panel no-selec\" *ngIf=\"ui.showPlanetbuilder\">\n            <div class=\"panel-title\">\n                <span> Planetbuilder </span>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"planetbuilder-column\" style=\"width: 30%;\">\n                    <div class=\"planetbuilder-item\">\n                        <span> Name </span>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <span> Distance (km) </span>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <span> Radius (km) </span>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <span> Inclination </span>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <span> Axis </span>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <span> Rotation period (hours) </span>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <span> Orbital period (days)</span>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <span> Orbital direction </span>\n                    </div>\n                </div>\n                <div class=\"planetbuilder-column\" style=\"width: 70%;\">\n                    <div class=\"planetbuilder-item\"> <!-- Name -->\n                        <input #pbName (keyup)=\"pb.name = pbName.value\" value=\"{{pb.name}}\">\n                    </div>\n                    <div class=\"planetbuilder-item\"> <!-- Distance -->\n                        <input #pbDistance (keyup)=\"pb.updateDistance(pbDistance.value)\" value=\"{{pb.distance}}\">\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <input #pbRadius (keyup)=\"pb.updateRadius(pbRadius.value)\" value=\"{{pb.radius}}\">\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <ngx-slider [(value)]=\"pb.inclination\" [options]=\"pb.inclinationOptions\"></ngx-slider>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <ngx-slider [(value)]=\"pb.axis\" [options]=\"pb.axisOptions\"></ngx-slider>\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <input #pbRotationPeriod (keyup)=\"pb.updateRotationPeriod(pbRotationPeriod.value)\"\n                            value=\"{{pb.rotationPeriod}}\">\n                    </div>\n                    <div class=\"planetbuilder-item\">\n                        <input #pbOrbitalPeriod (keyup)=\"pb.updateOrbitalPeriod(pbOrbitalPeriod.value)\"\n                            value=\"{{pb.orbitalPeriod}}\">\n                    </div>\n                    <div class=\"planetbuilder-item\"> <!-- Clockwise -->\n                        <button [class.button-active]=\"pb.clockwise\" class=\"button\" (click)=\"pb.clockwise = true\">\n                            Clockwise </button>\n                        <button [class.button-active]=\"!pb.clockwise\" class=\"button\" (click)=\"pb.clockwise = false\">\n                            Counter clockwise </button>\n                    </div>\n                </div>\n                <div id=\"planetbuilder-buttons\">\n                    <button class=\"button\" (click)=\"pb.generateRandomValues()\"> Random </button>\n                    <button class=\"button\" (click)=\"pb.createPlanet()\"> Create </button>\n                </div>\n            </div>\n        </div>\n\n        <!-- Info panel -->\n        <div id=\"info-container\" class=\"panel no-selec\" *ngIf=\"followPlanetName != null && ui.showInfoPanel\">\n            <div class=\"panel-title\">\n                <div> &nbsp; </div>\n                <span> {{followPlanetName}} </span>\n                <div (click)=\"ui.showInfoPanel = false\"> x </div>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"info-column\" style=\"width: 50%;\">\n                    <span> Diameter: </span>\n                    <span> Distance: </span>\n                    <span> Inclination: </span>\n                    <span> Axis: </span>\n                    <span> Rotation period: </span>\n                    <span> Orbital period: </span>\n                    <span> Direction: </span>\n                    <span *ngIf=\"getPlanet(followPlanetName).moonOf == null\"> Moons: </span>\n                    <span *ngIf=\"getPlanet(followPlanetName).moonOf != null\"> Is a moon of: </span>\n                </div>\n                <div class=\"info-column\" style=\"width: 50%;\">\n                    <span> {{getPlanet(followPlanetName).radius*2}}km </span>\n                    <span> {{getPlanet(followPlanetName).distance}}km </span>\n                    <span> {{getPlanet(followPlanetName).getInclination()}}&deg; </span>\n                    <span> {{getPlanet(followPlanetName).axis}}&deg; </span>\n                    <!-- <span> {{getPlanet(followPlanetName).rotationSpeed}} hours </span> -->\n                    <span> {{ui.transformHoursToTime(getPlanet(followPlanetName).rotationSpeed)}} </span>\n                    <!-- <span> {{getPlanet(followPlanetName).speed}} days </span> -->\n                    <span> {{ui.transformDaysToTime(getPlanet(followPlanetName).speed)}} </span>\n                    <span *ngIf=\"getPlanet(followPlanetName).clockwise\"> Clockwise </span>\n                    <span *ngIf=\"!getPlanet(followPlanetName).clockwise\"> Counter clockwise </span>\n                    <span *ngIf=\"getPlanet(followPlanetName).moonOf == null\">\n                        {{getPlanet(followPlanetName).moons.length}} </span>\n                    <span *ngIf=\"getPlanet(followPlanetName).moonOf != null\">\n                        {{getPlanet(followPlanetName).moonOf.name}} </span>\n                </div>\n            </div>\n        </div>\n\n        <!-- Button panel -->\n        <div class=\"panel no-selec\" id=\"button-container\">\n            <button class=\"button\" [class.button-active]=\"useGuideLines\" (click)=\"toggleGuideLines()\"> Orbit path\n            </button>\n            <button class=\"button\" [class.button-active]=\"ui.showInfoPanel\" (click)=\"ui.showInfo()\"> Planet info\n            </button>\n            <button class=\"button\" [class.button-active]=\"lightsOn\" (click)=\"toggleLight()\"> Flashlight </button>\n            <button class=\"button\" [class.button-active]=\"ui.showContactPage\" (click)=\"ui.showContact()\"> Contact\n            </button>\n            <button class=\"button\" [class.button-active]=\"pov\" (click)=\"togglePOV()\"> POV </button>\n            <button class=\"button\" [class.button-active]=\"railedCam\" (click)=\"railedCam = !railedCam\"> Cinematic cam\n            </button>\n            <!-- <button class= \"button\" [class.button-active] = \"flightMode\" (click)=\"flightMode = !flightMode\"> Flight mode </button> -->\n            <button class=\"button\" [class.button-active]=\"ui.showConstellations\" (click)=\"ui.toggleConstellations()\">\n                Constellations </button>\n            <button class=\"button\" (click)=\"ui.toggleUI()\"> Hide UI </button>\n        </div>\n\n        <!-- Slider panel -->\n        <div id=\"slider-panel\" class=\"panel no-selec\">\n            <div id=\"slider-header\" class=\"panel-title\">\n                <span class=\"button\" [class.button-active]=\"ui.currentSlider == 'Time'\"\n                    (click)=\"ui.currentSlider = 'Time'\"> Time </span>\n                <span class=\"button\" [class.button-active]=\"ui.currentSlider == 'Distance'\"\n                    (click)=\"ui.currentSlider = 'Distance'\"> Distance </span>\n                <span class=\"button\" [class.button-active]=\"ui.currentSlider == 'Zoom'\"\n                    (click)=\"ui.currentSlider = 'Zoom'\"> Zoom </span>\n            </div>\n            <div id=\"slider-body\" class=\"panel-body\">\n                <span> {{currentSlider}} </span>\n                <div *ngIf=\"ui.currentSlider == 'Time'\" id=\"time-buttons-container\">\n                    <button class=\"button\" [class.button-active]=\"sliderValue == REAL_TIME\"\n                        (click)=\"sliderValue = REAL_TIME\"> Realtime </button>\n                    <button class=\"button\" [class.button-active]=\"sliderValue == 0.167\" (click)=\"sliderValue = 0.167\">\n                        4h/s </button>\n                    <button class=\"button\" [class.button-active]=\"sliderValue == 1\" (click)=\"sliderValue = 1\"> 1d/s\n                    </button>\n                    <button class=\"button\" [class.button-active]=\"sliderValue == 7\" (click)=\"sliderValue = 7\"> 1w/s\n                    </button>\n                    <button class=\"button\" [class.button-active]=\"sliderValue == 365\" (click)=\"sliderValue = 365\"> 1y/s\n                    </button>\n                </div>\n                <div *ngIf=\"ui.currentSlider == 'Distance'\" id=\"time-buttons-container\">\n                    <button class=\"button\" [class.button-active]=\"distanceRatio == 0.02\" (click)=\"distanceRatio = 0.02\">\n                        1:50 </button>\n                    <button class=\"button\" [class.button-active]=\"distanceRatio == 1\" (click)=\"distanceRatio = 1\"> 1:1\n                    </button>\n                    <button class=\"button\" [class.button-active]=\"distanceRatio == 2\" (click)=\"distanceRatio = 2\"> 2:1\n                    </button>\n                </div>\n                <div id=\"slider\">\n                    <!-- <ngx-slider *ngIf=\"ui.currentSlider == 'Time'\" [(value)]=\"sliderValue\" [options]=\"options\"></ngx-slider> -->\n                    <!-- <ngx-slider *ngIf=\"ui.currentSlider == 'Distance'\" [(value)]=\"distanceRatio\" [options]=\"scaleOptions\"></ngx-slider> -->\n                    <ngx-slider *ngIf=\"ui.currentSlider == 'Zoom'\" [(value)]=\"camera.zoom\"\n                        [options]=\"zoomOptions\"></ngx-slider>\n                </div>\n            </div>\n        </div>\n\n        <!-- Contact page -->\n        <div id=contact-container class=\"panel\" *ngIf=\"ui.showContactPage\">\n            <h1 class=\"no-selec\">Contact me</h1>\n            <p><span class=\"no-selec\">Email:</span>&nbsp; jorrit.schepers1@gmail.com</p>\n            <a href=\"https://github.com/JorritSchepers\" target=\"_blank\" style=\"width: 7%\">\n                <img class=\"no-selec\"\n                    src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png\"\n                    style=\"width: 100%\">\n            </a>\n        </div>\n\n        <!-- Settings panel -->\n        <div id=\"settings-panel\" class=\"panel no-selec\" *ngIf=\"ui.showSettings\">\n            <div class=\"settings-column\">\n                <div class=\"settings-item\"> Distance unit </div>\n                <div class=\"settings-item\"> Bloom </div>\n                <div class=\"settings-item\"> Draw orbits </div>\n                <div class=\"settings-item\"> Draw flight path </div>\n                <div class=\"settings-item\"> Compass </div>\n            </div>\n            <div class=\"settings-column\">\n                <div class=\"settings-item\">\n                    <button class=\"button\" [class.button-active]=\"unit == 'km'\" (click)=\"unit = 'km'\"> Kilometer\n                    </button>\n                    <button class=\"button\" [class.button-active]=\"unit == 'mi'\" (click)=\"unit = 'mi'\"> Mile </button>\n                    <button class=\"button\" [class.button-active]=\"unit == 'AU'\" (click)=\"unit = 'AU'\"> AU </button>\n                </div>\n                <div class=\"settings-item\">\n                    <button class=\"button\" [class.button-active]=\"showBloom\" (click)=\"showBloom = true\"> On </button>\n                    <button class=\"button\" [class.button-active]=\"!showBloom\" (click)=\"showBloom = false\"> Off </button>\n                </div>\n                <div class=\"settings-item\">\n                    <button class=\"button\" [class.button-active]=\"useGuideLines\" (click)=\"setGuideLines(true)\"> On\n                    </button>\n                    <button class=\"button\" [class.button-active]=\"!useGuideLines\" (click)=\"setGuideLines(false)\"> Off\n                    </button>\n                </div>\n                <div class=\"settings-item\"> Work in progress </div>\n                <div class=\"settings-item\"> Work in progress </div>\n            </div>\n        </div>\n    </div>\n</main>");
+/* harmony default export */ __webpack_exports__["default"] = ("<canvas id=\"bg\"></canvas>\n<main>\n    <div *ngIf=\"viewer == 'default'\">\n        <button id=\"ui-toggle-button\" class=\"button no-selec\" *ngIf=\"!ui.showUI\" (click)=\"ui.toggleUI()\"> Show UI\n        </button>\n        <div id=\"container\" *ngIf=\"ui.showUI\">\n            <!-- Header -->\n            <div id=\"header\" class=\"panel no-selec\">\n                <div>\n                    <span id=\"distance-display\"> Distance to the sun: {{getDistanceDisplay(unit)}} {{unit}} </span>\n                </div>\n                <div>\n                    <span id=\"day-display\"> Day: {{dayDisplay}} </span>\n                </div>\n                <div style=\"cursor: pointer;\">\n                    <span id=\"distance-display\" (click)=\"ui.toggleSettings()\"> Settings </span>\n                </div>\n            </div>\n\n            <!-- Navigator -->\n            <div class=\"nav-button panel no-selec\" id=\"nav-open\"\n                (click)=\"ui.showNav = true; showContactPage = false; showInfoPanel = false;\" *ngIf=\"!ui.showNav\">\n                <div>&#x25B2;</div>\n            </div>\n            <div class=\"nav-button panel no-selec\" id=\"nav-close\" (click)=\"ui.showNav = false\" *ngIf=\"ui.showNav\">\n                <div>&#x25BC;</div>\n            </div>\n            <div id=\"nav-container\" class=\"panel no-selec\" *ngIf=\"ui.showNav\">\n                <div class=\"panel-title\">\n                    <div *ngIf=\"ui.navCurrentPage != 0\" (click)=\"ui.navCurrentPage = ui.navCurrentPage - 1\"> &lt; </div>\n                    <div *ngIf=\"ui.navCurrentPage == 0\"> &nbsp; </div>\n                    <span *ngIf=\"ui.navCurrentPage == 0\">Systems</span>\n                    <span *ngIf=\"ui.navCurrentPage == 1\">Planets</span>\n                    <span *ngIf=\"ui.navCurrentPage == 2 && getPlanet(followPlanetName).moonOf == null\"\n                        style=\"font-size: large\" (click)=\"ui.showInfoPanel = true\">Moons ({{followPlanetName}})</span>\n                    <span *ngIf=\"ui.navCurrentPage == 2 && getPlanet(followPlanetName).moonOf != null\"\n                        style=\"font-size: large\">Moons ({{getPlanet(followPlanetName).moonOf.name}})</span>\n                    <div *ngIf=\"ui.navCurrentPage == 0\" (click)=\"addNewSystem()\"> + </div>\n                    <div *ngIf=\"ui.navCurrentPage == 1 && !ui.showPlanetbuilder\"\n                        (click)=\"ui.showPlanetbuilder = !ui.showPlanetbuilder\"> + </div>\n                    <div *ngIf=\"ui.navCurrentPage == 1 && ui.showPlanetbuilder\"\n                        (click)=\"ui.showPlanetbuilder = !ui.showPlanetbuilder\"> - </div>\n                    <div *ngIf=\"ui.navCurrentPage == 2\"> &nbsp; </div>\n                </div>\n                <div class=\"panel-body\" style=\"flex-direction: column;\">\n                    <!-- Systems list -->\n                    <div style=\"width: 100%; height: 100%;\" *ngIf=\"ui.navCurrentPage == 0\">\n                        <div class=\"nav-list-item\" *ngFor=\"let system of systems\"\n                            (click)=\"switchToSystem(getSystemIndex(system.name))\">\n                            <span>{{system.name}}</span>\n                        </div>\n                    </div>\n\n                    <!-- Planets list -->\n                    <div style=\"width: 100%; height: 100%;\" *ngIf=\"ui.navCurrentPage == 1\">\n                        <div class=\"nav-list-item\" (click)=\"flyToPlanet(sun.name)\">\n                            <span>{{sun.name}}</span>\n                        </div>\n                        <div class=\"nav-list-item\" *ngFor=\"let planet of systems[currentSystem].planets\"\n                            (click)=\"flyToPlanet(planet.name)\">\n                            <span>{{planet.name}}</span>\n                        </div>\n                    </div>\n\n                    <!-- Moons list -->\n                    <div style=\"width: 100%; height: 100%;\" *ngIf=\"ui.navCurrentPage == 2\">\n                        <div style=\"width: 100%; height: 100%; overflow-x: hidden;\"\n                            *ngIf=\"getPlanet(followPlanetName).moonOf == null\">\n                            <div class=\"nav-list-item\" *ngFor=\"let moon of getPlanet(followPlanetName).moons\"\n                                (click)=\"flyToPlanet(moon.name)\">\n                                <span>{{moon.name}}</span>\n                            </div>\n                        </div>\n                        <div style=\"width: 100%; height: 100%;\" *ngIf=\"getPlanet(followPlanetName).moonOf != null\">\n                            <div class=\"nav-list-item\" *ngFor=\"let moon of getPlanet(followPlanetName).moonOf.moons\"\n                                (click)=\"flyToPlanet(moon.name)\">\n                                <span>{{moon.name}}</span>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Planetbuilder panel -->\n            <div id=\"planetbuilder-container\" class=\"panel no-selec\" *ngIf=\"ui.showPlanetbuilder\">\n                <div class=\"panel-title\">\n                    <span> Planetbuilder </span>\n                </div>\n                <div class=\"panel-body\">\n                    <div class=\"planetbuilder-column\" style=\"width: 30%;\">\n                        <div class=\"planetbuilder-item\">\n                            <span> Name </span>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <span> Distance (km) </span>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <span> Radius (km) </span>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <span> Inclination </span>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <span> Axis </span>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <span> Rotation period (hours) </span>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <span> Orbital period (days)</span>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <span> Orbital direction </span>\n                        </div>\n                    </div>\n                    <div class=\"planetbuilder-column\" style=\"width: 70%;\">\n                        <div class=\"planetbuilder-item\"> <!-- Name -->\n                            <input #pbName (keyup)=\"pb.name = pbName.value\" value=\"{{pb.name}}\">\n                        </div>\n                        <div class=\"planetbuilder-item\"> <!-- Distance -->\n                            <input #pbDistance (keyup)=\"pb.updateDistance(pbDistance.value)\" value=\"{{pb.distance}}\">\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <input #pbRadius (keyup)=\"pb.updateRadius(pbRadius.value)\" value=\"{{pb.radius}}\">\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <ngx-slider [(value)]=\"pb.inclination\" [options]=\"pb.inclinationOptions\"></ngx-slider>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <ngx-slider [(value)]=\"pb.axis\" [options]=\"pb.axisOptions\"></ngx-slider>\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <input #pbRotationPeriod (keyup)=\"pb.updateRotationPeriod(pbRotationPeriod.value)\"\n                                value=\"{{pb.rotationPeriod}}\">\n                        </div>\n                        <div class=\"planetbuilder-item\">\n                            <input #pbOrbitalPeriod (keyup)=\"pb.updateOrbitalPeriod(pbOrbitalPeriod.value)\"\n                                value=\"{{pb.orbitalPeriod}}\">\n                        </div>\n                        <div class=\"planetbuilder-item\"> <!-- Clockwise -->\n                            <button [class.button-active]=\"pb.clockwise\" class=\"button\" (click)=\"pb.clockwise = true\">\n                                Clockwise </button>\n                            <button [class.button-active]=\"!pb.clockwise\" class=\"button\" (click)=\"pb.clockwise = false\">\n                                Counter clockwise </button>\n                        </div>\n                    </div>\n                    <div id=\"planetbuilder-buttons\">\n                        <button class=\"button\" (click)=\"pb.generateRandomValues()\"> Random </button>\n                        <button class=\"button\" (click)=\"pb.createPlanet()\"> Create </button>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Info panel -->\n            <div id=\"info-container\" class=\"panel no-selec\" *ngIf=\"followPlanetName != null && ui.showInfoPanel\">\n                <div class=\"panel-title\">\n                    <div> &nbsp; </div>\n                    <span> {{followPlanetName}} </span>\n                    <div (click)=\"ui.showInfoPanel = false\"> x </div>\n                </div>\n                <div class=\"panel-body\">\n                    <div class=\"info-column\" style=\"width: 50%;\">\n                        <span> Diameter: </span>\n                        <span> Distance: </span>\n                        <span> Inclination: </span>\n                        <span> Axis: </span>\n                        <span> Rotation period: </span>\n                        <span> Orbital period: </span>\n                        <span> Direction: </span>\n                        <span *ngIf=\"getPlanet(followPlanetName).moonOf == null\"> Moons: </span>\n                        <span *ngIf=\"getPlanet(followPlanetName).moonOf != null\"> Is a moon of: </span>\n                    </div>\n                    <div class=\"info-column\" style=\"width: 50%;\">\n                        <span> {{getPlanet(followPlanetName).radius*2}}km </span>\n                        <span> {{getPlanet(followPlanetName).distance}}km </span>\n                        <span> {{getPlanet(followPlanetName).getInclination()}}&deg; </span>\n                        <span> {{getPlanet(followPlanetName).axis}}&deg; </span>\n                        <!-- <span> {{getPlanet(followPlanetName).rotationSpeed}} hours </span> -->\n                        <span> {{ui.transformHoursToTime(getPlanet(followPlanetName).rotationSpeed)}} </span>\n                        <!-- <span> {{getPlanet(followPlanetName).speed}} days </span> -->\n                        <span> {{ui.transformDaysToTime(getPlanet(followPlanetName).speed)}} </span>\n                        <span *ngIf=\"getPlanet(followPlanetName).clockwise\"> Clockwise </span>\n                        <span *ngIf=\"!getPlanet(followPlanetName).clockwise\"> Counter clockwise </span>\n                        <span *ngIf=\"getPlanet(followPlanetName).moonOf == null\">\n                            {{getPlanet(followPlanetName).moons.length}} </span>\n                        <span *ngIf=\"getPlanet(followPlanetName).moonOf != null\">\n                            {{getPlanet(followPlanetName).moonOf.name}} </span>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Button panel -->\n            <div class=\"panel no-selec\" id=\"button-container\">\n                <button class=\"button\" [class.button-active]=\"useGuideLines\" (click)=\"toggleGuideLines()\"> Orbit path\n                </button>\n                <button class=\"button\" [class.button-active]=\"ui.showInfoPanel\" (click)=\"ui.showInfo()\"> Planet info\n                </button>\n                <button class=\"button\" [class.button-active]=\"lightsOn\" (click)=\"toggleLight()\"> Flashlight </button>\n                <button class=\"button\" [class.button-active]=\"ui.showContactPage\" (click)=\"ui.showContact()\"> Contact\n                </button>\n                <button class=\"button\" [class.button-active]=\"pov\" (click)=\"togglePOV()\"> POV </button>\n                <button class=\"button\" [class.button-active]=\"railedCam\" (click)=\"railedCam = !railedCam\"> Cinematic cam\n                </button>\n                <!-- <button class= \"button\" [class.button-active] = \"flightMode\" (click)=\"flightMode = !flightMode\"> Flight mode </button> -->\n                <button class=\"button\" [class.button-active]=\"ui.showConstellations\"\n                    (click)=\"ui.toggleConstellations()\">\n                    Constellations </button>\n                <button class=\"button\" (click)=\"ui.toggleUI()\"> Hide UI </button>\n            </div>\n\n            <!-- Slider panel -->\n            <div id=\"slider-panel\" class=\"panel no-selec\">\n                <div id=\"slider-header\" class=\"panel-title\">\n                    <span class=\"button\" [class.button-active]=\"ui.currentSlider == 'Time'\"\n                        (click)=\"ui.currentSlider = 'Time'\"> Time </span>\n                    <span class=\"button\" [class.button-active]=\"ui.currentSlider == 'Distance'\"\n                        (click)=\"ui.currentSlider = 'Distance'\"> Distance </span>\n                    <span class=\"button\" [class.button-active]=\"ui.currentSlider == 'Zoom'\"\n                        (click)=\"ui.currentSlider = 'Zoom'\"> Zoom </span>\n                </div>\n                <div id=\"slider-body\" class=\"panel-body\">\n                    <span> {{currentSlider}} </span>\n                    <div *ngIf=\"ui.currentSlider == 'Time'\" id=\"time-buttons-container\">\n                        <button class=\"button\" [class.button-active]=\"sliderValue == REAL_TIME\"\n                            (click)=\"sliderValue = REAL_TIME\"> Realtime </button>\n                        <button class=\"button\" [class.button-active]=\"sliderValue == 0.167\"\n                            (click)=\"sliderValue = 0.167\">\n                            4h/s </button>\n                        <button class=\"button\" [class.button-active]=\"sliderValue == 1\" (click)=\"sliderValue = 1\"> 1d/s\n                        </button>\n                        <button class=\"button\" [class.button-active]=\"sliderValue == 7\" (click)=\"sliderValue = 7\"> 1w/s\n                        </button>\n                        <button class=\"button\" [class.button-active]=\"sliderValue == 365\" (click)=\"sliderValue = 365\">\n                            1y/s\n                        </button>\n                    </div>\n                    <div *ngIf=\"ui.currentSlider == 'Distance'\" id=\"time-buttons-container\">\n                        <button class=\"button\" [class.button-active]=\"distanceRatio == 0.02\"\n                            (click)=\"distanceRatio = 0.02\">\n                            1:50 </button>\n                        <button class=\"button\" [class.button-active]=\"distanceRatio == 1\" (click)=\"distanceRatio = 1\">\n                            1:1\n                        </button>\n                        <button class=\"button\" [class.button-active]=\"distanceRatio == 2\" (click)=\"distanceRatio = 2\">\n                            2:1\n                        </button>\n                    </div>\n                    <div id=\"slider\">\n                        <!-- <ngx-slider *ngIf=\"ui.currentSlider == 'Time'\" [(value)]=\"sliderValue\" [options]=\"options\"></ngx-slider> -->\n                        <!-- <ngx-slider *ngIf=\"ui.currentSlider == 'Distance'\" [(value)]=\"distanceRatio\" [options]=\"scaleOptions\"></ngx-slider> -->\n                        <ngx-slider *ngIf=\"ui.currentSlider == 'Zoom'\" [(value)]=\"camera.zoom\"\n                            [options]=\"zoomOptions\"></ngx-slider>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Contact page -->\n            <div id=contact-container class=\"panel\" *ngIf=\"ui.showContactPage\">\n                <h1 class=\"no-selec\">Contact me</h1>\n                <p><span class=\"no-selec\">Email:</span>&nbsp; jorrit.schepers1@gmail.com</p>\n                <a href=\"https://github.com/JorritSchepers\" target=\"_blank\" style=\"width: 7%\">\n                    <img class=\"no-selec\"\n                        src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png\"\n                        style=\"width: 100%\">\n                </a>\n            </div>\n\n            <!-- Settings panel -->\n            <div id=\"settings-panel\" class=\"panel no-selec\" *ngIf=\"ui.showSettings\">\n                <div class=\"settings-column\">\n                    <div class=\"settings-item\"> Distance unit </div>\n                    <div class=\"settings-item\"> Bloom </div>\n                    <div class=\"settings-item\"> Draw orbits </div>\n                    <div class=\"settings-item\"> Draw flight path </div>\n                    <div class=\"settings-item\"> Compass </div>\n                    <div class=\"settings-item\"> Constellations viewer </div>\n                </div>\n                <div class=\"settings-column\">\n                    <div class=\"settings-item\">\n                        <button class=\"button\" [class.button-active]=\"unit == 'km'\" (click)=\"unit = 'km'\"> Kilometer\n                        </button>\n                        <button class=\"button\" [class.button-active]=\"unit == 'mi'\" (click)=\"unit = 'mi'\"> Mile\n                        </button>\n                        <button class=\"button\" [class.button-active]=\"unit == 'AU'\" (click)=\"unit = 'AU'\"> AU </button>\n                    </div>\n                    <div class=\"settings-item\">\n                        <button class=\"button\" [class.button-active]=\"showBloom\" (click)=\"showBloom = true\"> On\n                        </button>\n                        <button class=\"button\" [class.button-active]=\"!showBloom\" (click)=\"showBloom = false\"> Off\n                        </button>\n                    </div>\n                    <div class=\"settings-item\">\n                        <button class=\"button\" [class.button-active]=\"useGuideLines\" (click)=\"setGuideLines(true)\"> On\n                        </button>\n                        <button class=\"button\" [class.button-active]=\"!useGuideLines\" (click)=\"setGuideLines(false)\">\n                            Off\n                        </button>\n                    </div>\n                    <div class=\"settings-item\"> Work in progress </div>\n                    <div class=\"settings-item\"> Work in progress </div>\n                    <div class=\"settings-item\">\n                        <button class=\"button\" (click)=\"EnterConstellationsViewer()\"> View </button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <!-- Constellations Viewer -->\n    <div *ngIf=\"viewer == 'constellations'\">\n        <button class=\"button\" (click)=\"ExitConstellationsViewer()\"> Exit </button>\n        <!-- <button class=\"button\" (click)=\"targetConst = 'Orion'\"> Orion </button>\n        <button class=\"button\" (click)=\"targetConst = 'Scorpius'\"> Scorpius </button>\n        <button class=\"button\" (click)=\"targetConst = 'Cassiopeia'\"> Cassiopeia </button>\n        <button class=\"button\" (click)=\"targetConst = 'Ursa Major'\"> Ursa Major </button>\n        <button class=\"button\" (click)=\"targetConst = 'Ursa Minor'\"> Ursa Minor </button>\n        <button class=\"button\" (click)=\"targetConst = 'Cygnus'\"> Cygnus </button>\n        <button class=\"button\" (click)=\"targetConst = 'Leo'\"> Leo </button>\n        <button class=\"button\" (click)=\"targetConst = 'Draco'\"> Draco </button>\n        <button class=\"button\" (click)=\"targetConst = 'Canis Major'\"> Canis Major </button> -->\n        <button *ngFor=\"let name of nightSky.constNamesStars\" class=\"button\" (click)=\"targetConst = name[0]\">\n            {{name[0]}}\n        </button>\n    </div>\n</main>");
 
 /***/ }),
 
@@ -327,6 +327,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _controller_PlanetBuilderController__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./controller/PlanetBuilderController */ "./src/app/controller/PlanetBuilderController.ts");
 /* harmony import */ var _controller_NightSkyController__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./controller/NightSkyController */ "./src/app/controller/NightSkyController.ts");
 /* harmony import */ var _controller_FlightController__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./controller/FlightController */ "./src/app/controller/FlightController.ts");
+/* harmony import */ var _assets_moonsJson__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./../assets/moonsJson */ "./src/assets/moonsJson.ts");
+
 
 
 
@@ -354,6 +356,9 @@ const BLOOM_PARAMS = {
 let AppComponent = class AppComponent {
     constructor() {
         this.keys = [];
+        this.rayCast = false;
+        this.viewer = "default";
+        this.targetConst = null;
         this.REAL_TIME = 1 / 24 / 3600;
         this.ui = new _controller_UIController__WEBPACK_IMPORTED_MODULE_5__["UIController"](this);
         this.pb = new _controller_PlanetBuilderController__WEBPACK_IMPORTED_MODULE_11__["PlanetBuilderController"](this);
@@ -418,39 +423,58 @@ let AppComponent = class AppComponent {
         this.nightSky.drawConstellations();
     }
     initTheSolarSystem() {
-        const moonTextureMap = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg');
         this.sun = this.addPlanet('Sun', SUN_RADIUS / this.SUN_RADIUS_RATIO, 40, 0, 0, 0, 0, true, 0, null, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/sun-map.jpg'), 28 * 24);
         this.sun.model.layers.enable(BLOOM_SCENE);
         this.addPlanet('Mercury', 2440, 20, 0x777777, 57910000, 3.38, 2, false, 88, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/mercury-map.jpg'), 59 * 24);
         this.addPlanet('Venus', 6052, 20, 0x7A381C, 108200000, 3.86, 2.7, false, 225, true, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/venus-map.jpg'), 243 * 24);
         let earth = this.addPlanet('Earth', 6371, 20, 0x243E49, 149600000, 7.155, 23.4, false, 365, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/earth-map2.jpg'), 24);
-        earth.addMoon('Moon', 1737, 20, 0x777777, 384400, 5.14, false, 27, true, moonTextureMap);
+        // earth.addMoon('Moon', 1737, 20, 0x777777, 384400, 5.14, false, 27, true, moonTextureMap)
         let mars = this.addPlanet('Mars', 3390, 20, 0xAC6349, 227900000, 5.65, 25, false, 687, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/mars-map.jpg'), 24.6);
-        mars.addMoon("Phobos", 11.1, 20, 0x777777, 9377, 1.093, false, 0.463, true, moonTextureMap);
-        mars.addMoon("Deimons", 6.3, 20, 0x777777, 23460, 0.93, false, 5.44, true, moonTextureMap);
+        // mars.addMoon("Phobos", 11.1, 20, 0x777777, 9377, 1.093, false, 0.463, true, moonTextureMap)
+        // mars.addMoon("Deimons", 6.3, 20, 0x777777, 23460, 0.93, false, 5.44, true, moonTextureMap)
         let jupiter = this.addPlanet('Jupiter', 69911, 20, 0x9F8E7A, 778500000, 6.09, 3, false, 4332, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/jupiter-map.jpg'), 9.5);
-        jupiter.addMoon('Ganymede', 5268 / 2, 20, 0x999999, 1070412, 0.204, false, 7.1546, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
-        jupiter.addMoon('Callisto', 4820 / 2, 20, 0x555555, 1882709, 0.205, false, 16.689, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
-        jupiter.addMoon('Io', 3643 / 2, 20, 0xD0C757, 421700, 0.050, false, 1.7691, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
-        jupiter.addMoon('Europa', 3121 / 2, 20, 0x856033, 671034, 0.471, false, 3.5512, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg'));
+        // jupiter.addMoon('Ganymede', 5268 / 2, 20, 0x999999, 1070412, 0.204, false, 7.1546, false, new THREE.TextureLoader().load('./solarsim/assets/maps/moon-map.jpg'))
+        // jupiter.addMoon('Callisto', 4820 / 2, 20, 0x555555, 1882709, 0.205, false, 16.689, false, new THREE.TextureLoader().load('./solarsim/assets/maps/moon-map.jpg'))
+        // jupiter.addMoon('Io', 3643 / 2, 20, 0xD0C757, 421700, 0.050, false, 1.7691, false, new THREE.TextureLoader().load('./solarsim/assets/maps/moon-map.jpg'))
+        // jupiter.addMoon('Europa', 3121 / 2, 20, 0x856033, 671034, 0.471, false, 3.5512, false, new THREE.TextureLoader().load('./solarsim/assets/maps/moon-map.jpg'))
         let saturn = this.addPlanet('Saturn', 58232, 20, 0xB2915F, 1434000000, 5.51, 26.73, false, 10757, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/saturn-map.jpg'), 10.5);
         saturn.addRing(136780, 136780 - 74500, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/rings.png'));
-        saturn.addMoon("Titan", 5149 / 2, 20, 0x777777, 1221870, 0.349, false, 16, true, moonTextureMap);
-        saturn.addMoon("Rhea", 1527 / 2, 20, 0x777777, 527108, 0.327, false, 4.5, true, moonTextureMap);
-        saturn.addMoon("Lapetus", 1470 / 2, 20, 0x777777, 3560820, 15.470, false, 79, true, moonTextureMap);
-        saturn.addMoon("Dione", 1123 / 2, 20, 0x777777, 377396, 0.002, false, 2.7, true, moonTextureMap);
-        saturn.addMoon("Tethys", 1062 / 2, 20, 0x777777, 294619, 0.168, false, 1.9, true, moonTextureMap);
-        saturn.addMoon("Enceladus", 504 / 2, 20, 0x777777, 237948, 0.010, false, 1.4, true, moonTextureMap);
-        saturn.addMoon("Mimas", 396 / 2, 20, 0x777777, 185539, 1.566, false, 0.9, true, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/mimas-map.png'));
+        // saturn.addMoon("Titan", 5149 / 2, 20, 0x777777, 1221870, 0.349, false, 16, true, moonTextureMap)
+        // saturn.addMoon("Rhea", 1527 / 2, 20, 0x777777, 527108, 0.327, false, 4.5, true, moonTextureMap)
+        // saturn.addMoon("Lapetus", 1470 / 2, 20, 0x777777, 3560820, 15.470, false, 79, true, moonTextureMap)
+        // saturn.addMoon("Dione", 1123 / 2, 20, 0x777777, 377396, 0.002, false, 2.7, true, moonTextureMap)
+        // saturn.addMoon("Tethys", 1062 / 2, 20, 0x777777, 294619, 0.168, false, 1.9, true, moonTextureMap)
+        // saturn.addMoon("Enceladus", 504 / 2, 20, 0x777777, 237948, 0.010, false, 1.4, true, moonTextureMap)
+        // saturn.addMoon("Mimas", 396 / 2, 20, 0x777777, 185539, 1.566, false, 0.9, true, new THREE.TextureLoader().load('./solarsim/assets/maps/mimas-map.png'))
         let uranus = this.addPlanet('Uranus', 25362, 20, 0x8EB2C4, 2871000000, 6.48, 97.77, false, 30687, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/uranus-map.jpg'), 7.25);
         // uranus.addRing(103000, 103000 - 34890, new THREE.TextureLoader().load('./solarsim/assets/maps/uranus-rings.png'))
-        uranus.addMoon("Titania", 1576 / 2, 20, 0x777777, 435910, 0.340, false, 8.7, true, moonTextureMap);
-        uranus.addMoon("Oberon", 1522 / 2, 20, 0x777777, 583520, 0.058, false, 13.4, true, moonTextureMap);
-        uranus.addMoon("Umbriel", 1169 / 2, 20, 0x777777, 266300, 0.205, false, 4.1, true, moonTextureMap);
-        uranus.addMoon("Ariel", 1157 / 2, 20, 0x777777, 191020, 0.260, false, 2.5, true, moonTextureMap);
-        uranus.addMoon("Miranda", 471 / 2, 20, 0x777777, 129390, 4.232, false, 1.4, true, moonTextureMap);
+        // uranus.addMoon("Titania", 1576 / 2, 20, 0x777777, 435910, 0.340, false, 8.7, true, moonTextureMap)
+        // uranus.addMoon("Oberon", 1522 / 2, 20, 0x777777, 583520, 0.058, false, 13.4, true, moonTextureMap)
+        // uranus.addMoon("Umbriel", 1169 / 2, 20, 0x777777, 266300, 0.205, false, 4.1, true, moonTextureMap)
+        // uranus.addMoon("Ariel", 1157 / 2, 20, 0x777777, 191020, 0.260, false, 2.5, true, moonTextureMap)
+        // uranus.addMoon("Miranda", 471 / 2, 20, 0x777777, 129390, 4.232, false, 1.4, true, moonTextureMap)
         let neptune = this.addPlanet('Neptune', 24622, 20, 0x4662F6, 4495000000, 6.43, 28, false, 60190, false, new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/neptune-map.jpg'), 16);
-        neptune.addMoon("Triton", 2705 / 2, 20, 0x777777, 354759, 180 - 156.865, false, 5.8, true, moonTextureMap);
+        // neptune.addMoon("Triton", 2s705 / 2, 20, 0x777777, 354759, 180 - 156.865, false, 5.8, true, moonTextureMap)
+        this.addAllMoons();
+    }
+    addAllMoons() {
+        const moonTextureMap = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/moon-map.jpg');
+        // let m = new Moons().moons[3];
+        // const planet = this.systems[this.currentSystem].planets.find((s) => s.name === m.Parent)
+        // m.DistanceFromParent = +(m.DistanceFromParent.toString().replace(",", ""))
+        // planet.addMoon(m.Name, +m.Radius, 20, 0x777777, +m.DistanceFromParent, 0, false, +m.OrbitalPeriod, true, moonTextureMap)
+        new _assets_moonsJson__WEBPACK_IMPORTED_MODULE_14__["Moons"]().moons.forEach((m) => {
+            // for (let i = 0; i < 100; i++) {
+            // const m = new Moons().moons[i];
+            const planet = this.systems[this.currentSystem].planets.find((s) => s.name === m.Parent);
+            if (planet == null) {
+                return;
+            }
+            m.DistanceFromParent = (m.DistanceFromParent.toString().replace(",", "").replace(",", ""));
+            m.OrbitalPeriod = (m.OrbitalPeriod.toString().replace(",", "").replace(",", ""));
+            planet.addMoon(m.Name, +m.Radius, 20, 0x777777, +m.DistanceFromParent, 0, false, +m.OrbitalPeriod, true, moonTextureMap);
+            // }
+        });
     }
     applyScaleIfWanted(boolean) {
         if (boolean) {
@@ -504,6 +528,11 @@ let AppComponent = class AppComponent {
                 }
                 else if (app.followPlanetName != null)
                     app.followPlanet(app.followPlanetName);
+                // else if (app.viewer == "constellations") {
+                else if (app.targetConst != null) {
+                    app.moveCamToConstellation();
+                }
+                // }
             }
             if (app.sun != null)
                 app.sun.model.rotation.y += (app.timeRatio / 1000);
@@ -512,7 +541,60 @@ let AppComponent = class AppComponent {
             app.checkDistanceRatio();
             app.render();
         };
+        if (this.rayCast) {
+            var raycaster = new three__WEBPACK_IMPORTED_MODULE_2__["Raycaster"]();
+            var mouse = new three__WEBPACK_IMPORTED_MODULE_2__["Vector2"]();
+            var intersects = [];
+            var selectedPlanet = null;
+            function onMouseMove(event) {
+                // calculate mouse position in normalized device coordinates
+                // (-1 to +1) for both components
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(mouse, app.camera);
+                intersects = raycaster.intersectObjects(app.scene.children, true);
+                if (intersects.length > 0) {
+                    if (intersects[0].object.name != "sun") {
+                        selectedPlanet = intersects[0].object;
+                    }
+                }
+            }
+            function onMouseClick(event) {
+                if (intersects.length > 0) {
+                    console.log(intersects[0].object.position.x);
+                }
+            }
+            window.addEventListener('mousemove', onMouseMove, false);
+            window.addEventListener('click', onMouseClick, false);
+        }
         animate();
+    }
+    moveCamToConstellation() {
+        if (this.targetConst == null)
+            return;
+        let destination = this.getConstellationCenter(this.targetConst);
+        this.controls.target.x += (destination[0] - this.controls.target.x) / 100;
+        this.controls.target.y += (destination[1] - this.controls.target.y) / 100;
+        this.controls.target.z += (destination[2] - this.controls.target.z) / 100;
+        // this.camera.lookAt(this.controls.target)
+        // console.log(this.controls.target)
+        // if (destination[0] - this.camera.position.x <= 100 && destination[0] - this.camera.position.x >= -100) {
+        //     this.targetConst = null;
+        // }
+    }
+    getConstellationCenter(name) {
+        let x = 0;
+        let y = 0;
+        let z = 0;
+        for (let i = 0; i < this.nightSky.constNamesStars.length; i++) {
+            if (this.nightSky.constNamesStars[i][0] == name) {
+                x = this.nightSky.constNamesStars[i][1].x;
+                y = this.nightSky.constNamesStars[i][1].y;
+                z = this.nightSky.constNamesStars[i][1].z;
+                return [x, y, z];
+            }
+        }
+        return [x, y, z];
     }
     rotatePlanets(planets) {
         planets.forEach((planet) => {
@@ -620,6 +702,22 @@ let AppComponent = class AppComponent {
                 this.scene.remove(moon.guideLine);
             });
         });
+    }
+    EnterConstellationsViewer() {
+        this.viewer = "constellations";
+        // move the camera to the center of the scene
+        this.camera.position.set(0, 0, 0);
+        // this.camera.lookAt(0, 100, 0);
+        this.targetConst = "Ursa Major";
+        this.followPlanetName = null;
+        // Disable orbit controls
+        this.controls.enabled = false;
+    }
+    ExitConstellationsViewer() {
+        this.viewer = "default";
+        this.targetConst = null;
+        this.controls.enabled = true;
+        this.flyToPlanet(this.sun.name);
     }
     addAllPlanetsToScene() {
         this.systems[this.currentSystem].planets.forEach((planet) => {
@@ -953,6 +1051,28 @@ __webpack_require__.r(__webpack_exports__);
 class NightSkyController {
     constructor(app) {
         this.stars = [];
+        this.constFocusHips = [
+            59774,
+            77055,
+            4427,
+            26311,
+            50583,
+            80331,
+            82396,
+            100453,
+            33152 // Canis Major X
+        ];
+        this.constNamesStars = [
+            ["Ursa Major", null],
+            ["Ursa Minor", null],
+            ["Cassiopeia", null],
+            ["Orion", null],
+            ["Leo", null],
+            ["Draco", null],
+            ["Scorpius", null],
+            ["Cygnus", null],
+            ["Canis Major", null]
+        ];
         this.cHips = [
             [59774, 54061, 53910, 58001, 59774, 62956, 65378, 67301],
             [11767, 85822, 82080, 77055, 79822, 75097, 72607, 77055],
@@ -967,21 +1087,39 @@ class NightSkyController {
                 25336, 25930, 24436, 27366],
             [47908, 48455, 50335, 50583, 54872, 57632, 54879, 49583, 50583],
             [56211, 61281, 68756, 75458, 78527, 80331, 83895, 89908, 94376, 87585, 87833, 85670, 85829, 87585],
-            [85696, 86670, 87073, 86228, 84143, 82729, 82514, 82396, 81266, 80763, 80112, 78401, 78820, 79374, 78820, 78401, 78265, 78104] // Scorpius
+            [85696, 86670, 87073, 86228, 84143, 82729, 82514, 82396, 81266, 80763, 80112, 78401, 78820, 79374, 78820, 78401, 78265, 78104],
+            [102098, 100453, 102488, 104732, 102488, 100453, 97165, 95853, 94779, 95853, 97165, 100453, 98110, 95947],
+            [32349, 33347, 33160, 34045, 33347, 32349 // Canis Major - Kop
+                ,
+                31592, 30324, 31592, 31416, 31592, 33152 // Canis Major - Voor lichaam
+                ,
+                33856, 33579, 30122, 33579, 32759, 33579, 33856, 34444 // Canis Major - Achter lichaam
+                ,
+                35037, 35904, 35037, 34444, 32349] // Canis Major (Grote Hond)
         ];
         this.constellations = [];
         this.n = 1;
+        this.cn = 0;
         this.map = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]().load('./solarsim/assets/maps/star-map.png');
         this.app = app;
     }
     init() {
         new _assets_starsJson__WEBPACK_IMPORTED_MODULE_1__["Stars"]().stars.forEach((s) => {
-            const threshold = 5;
-            const red = "rgb(255, 150, 150)";
-            const blue = "rgb(180, 180, 255)";
-            let colorString = red;
-            if (s.mag < threshold)
-                colorString = blue;
+            const threshold = 4;
+            // const red = "rgb(255, 150, 150)"
+            // const yellow = "rgb(255,255,100)"
+            const blueString = "rgb(180, 180, 255)";
+            // let colorString = yellow
+            // if (s.mag < threshold) colorString = blue
+            let colorString = blueString;
+            if (s.mag > threshold) {
+                const score = 1 / s.mag;
+                let red = 255 - Math.round((score * 200));
+                let green = 255 - Math.round((score * 200));
+                let blue = 0 + Math.round((score * 255));
+                colorString = "rgb(" + red + "," + green + "," + blue + ")";
+            }
+            // let colorString = red
             const size = (1 / s.mag) * 30000000000 * 5; // 30B
             // const g = new THREE.SphereGeometry(size, 10, 10);
             const g = new three__WEBPACK_IMPORTED_MODULE_2__["BoxGeometry"](size, size, size);
@@ -1004,8 +1142,13 @@ class NightSkyController {
             const points = [];
             c.forEach(cHip => {
                 const star = this.stars.find(s => s.hip == cHip);
-                if (star != null)
+                if (star != null) {
+                    if (star.hip == this.constFocusHips[this.cn]) {
+                        this.constNamesStars[this.cn][1] = star;
+                        this.cn++;
+                    }
                     points.push(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](star.x, star.y, star.z));
+                }
                 else
                     console.warn("Did not find the star with HIP-code: " + cHip);
             });
@@ -1353,13 +1496,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
 class Star {
-    // constructor(name: string, x: number, y: number, z: number, mag: number) {
-    //     this.name = name;
-    //     this.x = x;
-    //     this.y = y;
-    //     this.z = z;
-    //     this.mag = mag;
-    // }
     constructor(hip, x, y, z, mag) {
         this.hip = hip;
         this.x = x;
@@ -1394,6 +1530,2690 @@ class Solarsystem {
     }
     addPlanet(planet) {
         this.planets.push(planet);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/moonsJson.ts":
+/*!*********************************!*\
+  !*** ./src/assets/moonsJson.ts ***!
+  \*********************************/
+/*! exports provided: Moons */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Moons", function() { return Moons; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class Moons {
+    constructor() {
+        this.moons = [
+            {
+                "Name": "Moon",
+                "Parent": "Earth",
+                "Numeral": "I (1)",
+                "Radius": "1738",
+                "DistanceFromParent": "384,399",
+                "OrbitalPeriod": 27.321582,
+                "Discovery year": "Prehistoric",
+                "Year Announced": "Prehistory",
+                "Discovered by": "—"
+            },
+            {
+                "Name": "Phobos",
+                "Parent": "Mars",
+                "Numeral": "I (1)",
+                "Radius": 11.267,
+                "DistanceFromParent": "9,380",
+                "OrbitalPeriod": 0.319,
+                "Discovery year": 1877,
+                "Year Announced": 1877,
+                "Discovered by": "Hall"
+            },
+            {
+                "Name": "Deimos",
+                "Parent": "Mars",
+                "Numeral": "II (2)",
+                "Radius": "6.2",
+                "DistanceFromParent": "23,460",
+                "OrbitalPeriod": 1.262,
+                "Discovery year": 1877,
+                "Year Announced": 1877,
+                "Discovered by": "Hall"
+            },
+            {
+                "Name": "Io",
+                "Parent": "Jupiter",
+                "Numeral": "I (1)",
+                "Radius": "1821.6",
+                "DistanceFromParent": "421,800",
+                "OrbitalPeriod": 1.769,
+                "Discovery year": 1610,
+                "Year Announced": 1610,
+                "Discovered by": "Galileo"
+            },
+            {
+                "Name": "Europa",
+                "Parent": "Jupiter",
+                "Numeral": "II (2)",
+                "Radius": "1560.8",
+                "DistanceFromParent": "671,100",
+                "OrbitalPeriod": 3.551,
+                "Discovery year": 1610,
+                "Year Announced": 1610,
+                "Discovered by": "Galileo"
+            },
+            {
+                "Name": "Ganymede",
+                "Parent": "Jupiter",
+                "Numeral": "III (3)",
+                "Radius": "2634.1",
+                "DistanceFromParent": "1,070,400",
+                "OrbitalPeriod": 7.155,
+                "Discovery year": 1610,
+                "Year Announced": 1610,
+                "Discovered by": "Galileo"
+            },
+            {
+                "Name": "Callisto",
+                "Parent": "Jupiter",
+                "Numeral": "IV (4)",
+                "Radius": "2410.3",
+                "DistanceFromParent": "1,882,700",
+                "OrbitalPeriod": 16.69,
+                "Discovery year": 1610,
+                "Year Announced": 1610,
+                "Discovered by": "Galileo"
+            },
+            {
+                "Name": "Amalthea",
+                "Parent": "Jupiter",
+                "Numeral": "V (5)",
+                "Radius": "83.5",
+                "DistanceFromParent": "181,400",
+                "OrbitalPeriod": 0.498,
+                "Discovery year": 1892,
+                "Year Announced": 1892,
+                "Discovered by": "Barnard"
+            },
+            {
+                "Name": "Himalia",
+                "Parent": "Jupiter",
+                "Numeral": "VI (6)",
+                "Radius": 69.8,
+                "DistanceFromParent": "11,461,000",
+                "OrbitalPeriod": 250.56,
+                "Discovery year": 1904,
+                "Year Announced": 1905,
+                "Discovered by": "Perrine"
+            },
+            {
+                "Name": "Elara",
+                "Parent": "Jupiter",
+                "Numeral": "VII (7)",
+                "Radius": 43,
+                "DistanceFromParent": "11,741,000",
+                "OrbitalPeriod": 259.64,
+                "Discovery year": 1905,
+                "Year Announced": 1905,
+                "Discovered by": "Perrine"
+            },
+            {
+                "Name": "Pasiphae",
+                "Parent": "Jupiter",
+                "Numeral": "VIII (8)",
+                "Radius": 30,
+                "DistanceFromParent": "23,624,000",
+                "OrbitalPeriod": "743.63",
+                "Discovery year": 1908,
+                "Year Announced": 1908,
+                "Discovered by": "Melotte"
+            },
+            {
+                "Name": "Sinope",
+                "Parent": "Jupiter",
+                "Numeral": "IX (9)",
+                "Radius": 19,
+                "DistanceFromParent": "23,939,000",
+                "OrbitalPeriod": "758.90",
+                "Discovery year": 1914,
+                "Year Announced": 1914,
+                "Discovered by": "Nicholson"
+            },
+            {
+                "Name": "Lysithea",
+                "Parent": "Jupiter",
+                "Numeral": "X (10)",
+                "Radius": 18,
+                "DistanceFromParent": "11,717,000",
+                "OrbitalPeriod": 259.2,
+                "Discovery year": 1938,
+                "Year Announced": 1938,
+                "Discovered by": "Nicholson"
+            },
+            {
+                "Name": "Carme",
+                "Parent": "Jupiter",
+                "Numeral": "XI (11)",
+                "Radius": 23,
+                "DistanceFromParent": "23,404,000",
+                "OrbitalPeriod": "734.17",
+                "Discovery year": 1938,
+                "Year Announced": 1938,
+                "Discovered by": "Nicholson"
+            },
+            {
+                "Name": "Ananke",
+                "Parent": "Jupiter",
+                "Numeral": "XII (12)",
+                "Radius": 14,
+                "DistanceFromParent": "21,276,000",
+                "OrbitalPeriod": "629.77",
+                "Discovery year": 1951,
+                "Year Announced": 1951,
+                "Discovered by": "Nicholson"
+            },
+            {
+                "Name": "Leda",
+                "Parent": "Jupiter",
+                "Numeral": "XIII (13)",
+                "Radius": 10,
+                "DistanceFromParent": "11,165,000",
+                "OrbitalPeriod": 240.92,
+                "Discovery year": 1974,
+                "Year Announced": 1974,
+                "Discovered by": "Kowal"
+            },
+            {
+                "Name": "Thebe",
+                "Parent": "Jupiter",
+                "Numeral": "XIV (14)",
+                "Radius": "49.3",
+                "DistanceFromParent": "221,900",
+                "OrbitalPeriod": 0.675,
+                "Discovery year": 1979,
+                "Year Announced": 1980,
+                "Discovered by": "Synnott (Voyager 1)"
+            },
+            {
+                "Name": "Adrastea",
+                "Parent": "Jupiter",
+                "Numeral": "XV (15)",
+                "Radius": "8.2",
+                "DistanceFromParent": "129,000",
+                "OrbitalPeriod": 0.298,
+                "Discovery year": 1979,
+                "Year Announced": 1979,
+                "Discovered by": "Jewitt, Danielson (Voyager 1)"
+            },
+            {
+                "Name": "Metis",
+                "Parent": "Jupiter",
+                "Numeral": "XVI (16)",
+                "Radius": "21.5",
+                "DistanceFromParent": "128,000",
+                "OrbitalPeriod": 0.295,
+                "Discovery year": 1979,
+                "Year Announced": 1980,
+                "Discovered by": "Synnott (Voyager 1)"
+            },
+            {
+                "Name": "Callirrhoe",
+                "Parent": "Jupiter",
+                "Numeral": "XVII (17)",
+                "Radius": 4.5,
+                "DistanceFromParent": "24,103,000",
+                "OrbitalPeriod": "758.77",
+                "Discovery year": 1999,
+                "Year Announced": 2000,
+                "Discovered by": "Scotti, Spahr, McMillan, Larsen, Montani, Gleason, Gehrels"
+            },
+            {
+                "Name": "Themisto",
+                "Parent": "Jupiter",
+                "Numeral": "XVIII (18)",
+                "Radius": 4,
+                "DistanceFromParent": "7,284,000",
+                "OrbitalPeriod": 130.02,
+                "Discovery year": "1975/2000",
+                "Year Announced": "1975/2000",
+                "Discovered by": "Kowal and Roemer (original); Sheppard, Jewitt, Fernández, Magnier (rediscovery)"
+            },
+            {
+                "Name": "Megaclite",
+                "Parent": "Jupiter",
+                "Numeral": "XIX (19)",
+                "Radius": 2.7,
+                "DistanceFromParent": "23,493,000",
+                "OrbitalPeriod": "752.86",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Taygete",
+                "Parent": "Jupiter",
+                "Numeral": "XX (20)",
+                "Radius": 2.5,
+                "DistanceFromParent": "23,280,000",
+                "OrbitalPeriod": "732.41",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Chaldene",
+                "Parent": "Jupiter",
+                "Numeral": "XXI (21)",
+                "Radius": 1.9,
+                "DistanceFromParent": "23,100,000",
+                "OrbitalPeriod": "723.72",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Harpalyke",
+                "Parent": "Jupiter",
+                "Numeral": "XXII (22)",
+                "Radius": 2.2,
+                "DistanceFromParent": "20,858,000",
+                "OrbitalPeriod": "623.32",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Kalyke",
+                "Parent": "Jupiter",
+                "Numeral": "XXIII (23)",
+                "Radius": 2.6,
+                "DistanceFromParent": "23,483,000",
+                "OrbitalPeriod": "742.06",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Iocaste",
+                "Parent": "Jupiter",
+                "Numeral": "XXIV (24)",
+                "Radius": 2.6,
+                "DistanceFromParent": "21,060,000",
+                "OrbitalPeriod": "631.60",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Erinome",
+                "Parent": "Jupiter",
+                "Numeral": "XXV (25)",
+                "Radius": 1.6,
+                "DistanceFromParent": "23,196,000",
+                "OrbitalPeriod": "728.46",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Isonoe",
+                "Parent": "Jupiter",
+                "Numeral": "XXVI (26)",
+                "Radius": 1.9,
+                "DistanceFromParent": "23,155,000",
+                "OrbitalPeriod": "726.23",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Praxidike",
+                "Parent": "Jupiter",
+                "Numeral": "XXVII (27)",
+                "Radius": 3.5,
+                "DistanceFromParent": "20,908,000",
+                "OrbitalPeriod": "625.39",
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Fernández, Magnier, Dahm, Evans"
+            },
+            {
+                "Name": "Autonoe",
+                "Parent": "Jupiter",
+                "Numeral": "XXVIII (28)",
+                "Radius": 2,
+                "DistanceFromParent": "24,046,000",
+                "OrbitalPeriod": "760.95",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Thyone",
+                "Parent": "Jupiter",
+                "Numeral": "XXIX (29)",
+                "Radius": 2,
+                "DistanceFromParent": "20,939,000",
+                "OrbitalPeriod": "627.21",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Hermippe",
+                "Parent": "Jupiter",
+                "Numeral": "XXX (30)",
+                "Radius": 2,
+                "DistanceFromParent": "21,131,000",
+                "OrbitalPeriod": "633.9",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Aitne",
+                "Parent": "Jupiter",
+                "Numeral": "XXXI (31)",
+                "Radius": 1.5,
+                "DistanceFromParent": "23,229,000",
+                "OrbitalPeriod": "730.18",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Eurydome",
+                "Parent": "Jupiter",
+                "Numeral": "XXXII (32)",
+                "Radius": 1.5,
+                "DistanceFromParent": "22,865,000",
+                "OrbitalPeriod": "717.33",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Euanthe",
+                "Parent": "Jupiter",
+                "Numeral": "XXXIII (33)",
+                "Radius": 1.5,
+                "DistanceFromParent": "20,797,000",
+                "OrbitalPeriod": "620.49",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Euporie",
+                "Parent": "Jupiter",
+                "Numeral": "XXXIV (34)",
+                "Radius": 1,
+                "DistanceFromParent": "19,304,000",
+                "OrbitalPeriod": "550.74",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Orthosie",
+                "Parent": "Jupiter",
+                "Numeral": "XXXV (35)",
+                "Radius": 1,
+                "DistanceFromParent": "20,720,000",
+                "OrbitalPeriod": "622.56",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Sponde",
+                "Parent": "Jupiter",
+                "Numeral": "XXXVI (36)",
+                "Radius": 1,
+                "DistanceFromParent": "23,487,000",
+                "OrbitalPeriod": "748.34",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Kale",
+                "Parent": "Jupiter",
+                "Numeral": "XXXVII (37)",
+                "Radius": 1,
+                "DistanceFromParent": "23,217,000",
+                "OrbitalPeriod": "729.47",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Pasithee",
+                "Parent": "Jupiter",
+                "Numeral": "XXXVIII (38)",
+                "Radius": 1,
+                "DistanceFromParent": "23,004,000",
+                "OrbitalPeriod": "719.44",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Hegemone",
+                "Parent": "Jupiter",
+                "Numeral": "XXXIX (39)",
+                "Radius": 1.5,
+                "DistanceFromParent": "23,577,000",
+                "OrbitalPeriod": "739.88",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández"
+            },
+            {
+                "Name": "Mneme",
+                "Parent": "Jupiter",
+                "Numeral": "XL (40)",
+                "Radius": 1,
+                "DistanceFromParent": "21,035,000",
+                "OrbitalPeriod": "620.04",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Gladman, Allen"
+            },
+            {
+                "Name": "Aoede",
+                "Parent": "Jupiter",
+                "Numeral": "XLI (41)",
+                "Radius": 2,
+                "DistanceFromParent": "23,980,000",
+                "OrbitalPeriod": "761.50",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "Thelxinoe",
+                "Parent": "Jupiter",
+                "Numeral": "XLII (42)",
+                "Radius": 1,
+                "DistanceFromParent": "21,164,000",
+                "OrbitalPeriod": "628.09",
+                "Discovery year": 2003,
+                "Year Announced": 2004,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Gladman, Kavelaars, Petit, Allen"
+            },
+            {
+                "Name": "Arche",
+                "Parent": "Jupiter",
+                "Numeral": "XLIII (43)",
+                "Radius": 1.5,
+                "DistanceFromParent": "23,355,000",
+                "OrbitalPeriod": "731.95",
+                "Discovery year": 2002,
+                "Year Announced": 2002,
+                "Discovered by": "Sheppard, Meech, Hsieh, Tholen, Tonry"
+            },
+            {
+                "Name": "Kallichore",
+                "Parent": "Jupiter",
+                "Numeral": "XLIV (44)",
+                "Radius": 1,
+                "DistanceFromParent": "23,288,000",
+                "OrbitalPeriod": "728.73",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández"
+            },
+            {
+                "Name": "Helike",
+                "Parent": "Jupiter",
+                "Numeral": "XLV (45)",
+                "Radius": 2,
+                "DistanceFromParent": "21,069,000",
+                "OrbitalPeriod": "626.32",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "Carpo",
+                "Parent": "Jupiter",
+                "Numeral": "XLVI (46)",
+                "Radius": 1.5,
+                "DistanceFromParent": "17,058,000",
+                "OrbitalPeriod": 456.3,
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Gladman, Kavelaars, Petit, Allen, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Eukelade",
+                "Parent": "Jupiter",
+                "Numeral": "XLVII (47)",
+                "Radius": 2,
+                "DistanceFromParent": "23,328,000",
+                "OrbitalPeriod": "730.47",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "Cyllene",
+                "Parent": "Jupiter",
+                "Numeral": "XLVIII (48)",
+                "Radius": 1,
+                "DistanceFromParent": "23,809,000",
+                "OrbitalPeriod": "752",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Kore",
+                "Parent": "Jupiter",
+                "Numeral": "XLIX (49)",
+                "Radius": 1,
+                "DistanceFromParent": "24,543,000",
+                "OrbitalPeriod": "779.17",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Herse",
+                "Parent": "Jupiter",
+                "Numeral": "L (50)",
+                "Radius": 1,
+                "DistanceFromParent": "22,983,000",
+                "OrbitalPeriod": "714.51",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Gladman, Sheppard, Jewitt, Kleyna, Kavelaars, Petit, Allen"
+            },
+            {
+                "Name": "S/2010 J 1",
+                "Parent": "Jupiter",
+                "Numeral": "LI (51)",
+                "Radius": 1,
+                "DistanceFromParent": "23,314,300",
+                "OrbitalPeriod": "723.2",
+                "Discovery year": 2010,
+                "Year Announced": 2011,
+                "Discovered by": "Jacobson, Brozović, Gladman, Alexandersen"
+            },
+            {
+                "Name": "S/2010 J 2",
+                "Parent": "Jupiter",
+                "Numeral": "LII (52)",
+                "Radius": 0.5,
+                "DistanceFromParent": "20,307,200",
+                "OrbitalPeriod": "588.1",
+                "Discovery year": 2010,
+                "Year Announced": 2011,
+                "Discovered by": "Veillet"
+            },
+            {
+                "Name": "Dia",
+                "Parent": "Jupiter",
+                "Numeral": "LIII (53)",
+                "Radius": 2,
+                "DistanceFromParent": "12,118,000",
+                "OrbitalPeriod": 287,
+                "Discovery year": 2000,
+                "Year Announced": 2001,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "S/2016 J 1",
+                "Parent": "Jupiter",
+                "Numeral": "LIV (54)",
+                "Radius": 1,
+                "DistanceFromParent": "20,595,500",
+                "OrbitalPeriod": "602.7",
+                "Discovery year": 2016,
+                "Year Announced": 2017,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2003 J 18",
+                "Parent": "Jupiter",
+                "Numeral": "LV (55)",
+                "Radius": 1,
+                "DistanceFromParent": "20,274,000",
+                "OrbitalPeriod": "588.0",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Gladman, Sheppard, Jewitt, Kleyna, Kavelaars, Petit, Allen"
+            },
+            {
+                "Name": "S/2011 J 2",
+                "Parent": "Jupiter",
+                "Numeral": "LVI (56)",
+                "Radius": 0.5,
+                "DistanceFromParent": "23,329,700",
+                "OrbitalPeriod": "726.8",
+                "Discovery year": 2011,
+                "Year Announced": 2012,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "Eirene",
+                "Parent": "Jupiter",
+                "Numeral": "LVII (57)",
+                "Radius": 2,
+                "DistanceFromParent": "23,731,800",
+                "OrbitalPeriod": "759.7",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "Philophrosyne",
+                "Parent": "Jupiter",
+                "Numeral": "LVIII (58)",
+                "Radius": 1,
+                "DistanceFromParent": "22,820,000",
+                "OrbitalPeriod": "701.3",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández"
+            },
+            {
+                "Name": "S/2017 J 1",
+                "Parent": "Jupiter",
+                "Numeral": "LIX (59)",
+                "Radius": 2,
+                "DistanceFromParent": "23,484,000",
+                "OrbitalPeriod": "734.2",
+                "Discovery year": 2017,
+                "Year Announced": 2017,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "Eupheme",
+                "Parent": "Jupiter",
+                "Numeral": "LX (60)",
+                "Radius": 1,
+                "DistanceFromParent": "21,199,710",
+                "OrbitalPeriod": "627.8",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "S/2003 J 19",
+                "Parent": "Jupiter",
+                "Numeral": "LXI (61)",
+                "Radius": 1,
+                "DistanceFromParent": "22,757,000",
+                "OrbitalPeriod": "697.6",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Gladman, Sheppard, Jewitt, Kleyna, Kavelaars, Petit, Allen"
+            },
+            {
+                "Name": "Valetudo",
+                "Parent": "Jupiter",
+                "Numeral": "LXII (62)",
+                "Radius": 0.5,
+                "DistanceFromParent": "18,928,100",
+                "OrbitalPeriod": 532,
+                "Discovery year": 2016,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2017 J 2",
+                "Parent": "Jupiter",
+                "Numeral": "LXIII (63)",
+                "Radius": 1,
+                "DistanceFromParent": "23,241,000",
+                "OrbitalPeriod": "723.8",
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2017 J 3",
+                "Parent": "Jupiter",
+                "Numeral": "LXIV (64)",
+                "Radius": 1,
+                "DistanceFromParent": "20,639,300",
+                "OrbitalPeriod": "605.8",
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "Pandia",
+                "Parent": "Jupiter",
+                "Numeral": "LXV (65)",
+                "Radius": 1.5,
+                "DistanceFromParent": "11,494,800",
+                "OrbitalPeriod": 251.8,
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2017 J 5",
+                "Parent": "Jupiter",
+                "Numeral": "LXVI (66)",
+                "Radius": 1,
+                "DistanceFromParent": "23,169,400",
+                "OrbitalPeriod": "720.5",
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2017 J 6",
+                "Parent": "Jupiter",
+                "Numeral": "LXVII (67)",
+                "Radius": 1,
+                "DistanceFromParent": "22,394,700",
+                "OrbitalPeriod": "684.7",
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2017 J 7",
+                "Parent": "Jupiter",
+                "Numeral": "LXVIII (68)",
+                "Radius": 1,
+                "DistanceFromParent": "20,571,500",
+                "OrbitalPeriod": "602.8",
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2017 J 8",
+                "Parent": "Jupiter",
+                "Numeral": "LXIX (69)",
+                "Radius": 0.5,
+                "DistanceFromParent": "23,174,400",
+                "OrbitalPeriod": "720.7",
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2017 J 9",
+                "Parent": "Jupiter",
+                "Numeral": "LXX (70)",
+                "Radius": 1,
+                "DistanceFromParent": "21,430,000",
+                "OrbitalPeriod": "640.9",
+                "Discovery year": 2017,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "Ersa",
+                "Parent": "Jupiter",
+                "Numeral": "LXXI (71)",
+                "Radius": 1.5,
+                "DistanceFromParent": "11,453,000",
+                "OrbitalPeriod": 250.4,
+                "Discovery year": 2018,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2011 J 1",
+                "Parent": "Jupiter",
+                "Numeral": "LXXII (72)",
+                "Radius": 0.5,
+                "DistanceFromParent": "20,155,300",
+                "OrbitalPeriod": "580.7",
+                "Discovery year": 2011,
+                "Year Announced": 2012,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2003 J 2",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "20,554,400",
+                "OrbitalPeriod": "602.02",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "S/2003 J 4",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "22,048,600",
+                "OrbitalPeriod": "668.85",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández, Hsieh"
+            },
+            {
+                "Name": "S/2003 J 9",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "24,168,700",
+                "OrbitalPeriod": "767.6",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández"
+            },
+            {
+                "Name": "S/2003 J 10",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "22,896,000",
+                "OrbitalPeriod": "707.78",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández"
+            },
+            {
+                "Name": "S/2003 J 12",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "21,557,700",
+                "OrbitalPeriod": "646.64",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández"
+            },
+            {
+                "Name": "S/2003 J 16",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "20,512,500",
+                "OrbitalPeriod": "600.18",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Gladman, Sheppard, Jewitt, Kleyna, Kavelaars, Petit, Allen"
+            },
+            {
+                "Name": "S/2003 J 23",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "24,678,100",
+                "OrbitalPeriod": "792.00",
+                "Discovery year": 2003,
+                "Year Announced": 2004,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Fernández"
+            },
+            {
+                "Name": "S/2003 J 24",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1.5,
+                "DistanceFromParent": "23,088,000",
+                "OrbitalPeriod": "715.4",
+                "Discovery year": 2003,
+                "Year Announced": 2021,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Gladman, Veillet"
+            },
+            {
+                "Name": "S/2011 J 3",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1.5,
+                "DistanceFromParent": "11,797,200",
+                "OrbitalPeriod": 261.77,
+                "Discovery year": 2011,
+                "Year Announced": 2022,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2016 J 3",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "22,213,500",
+                "OrbitalPeriod": "676.37",
+                "Discovery year": 2016,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2016 J 4",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "23,664,100",
+                "OrbitalPeriod": "743.69",
+                "Discovery year": 2016,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2018 J 2",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1.5,
+                "DistanceFromParent": "11,467,500",
+                "OrbitalPeriod": 250.88,
+                "Discovery year": 2018,
+                "Year Announced": 2022,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2018 J 3",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "22,826,600",
+                "OrbitalPeriod": "704.56",
+                "Discovery year": 2018,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2018 J 4",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "16,504,300",
+                "OrbitalPeriod": 433.16,
+                "Discovery year": 2018,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2021 J 1",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "20,667,200",
+                "OrbitalPeriod": "606.99",
+                "Discovery year": 2021,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2021 J 2",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "21,140,600",
+                "OrbitalPeriod": "627.96",
+                "Discovery year": 2021,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2021 J 3",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "21,495,700",
+                "OrbitalPeriod": "643.85",
+                "Discovery year": 2021,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2021 J 4",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "22,946,700",
+                "OrbitalPeriod": "710.13",
+                "Discovery year": 2021,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2021 J 5",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 1,
+                "DistanceFromParent": "22,831,800",
+                "OrbitalPeriod": "704.80",
+                "Discovery year": 2021,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard, Tholen, Trujillo"
+            },
+            {
+                "Name": "S/2021 J 6",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "23,427,200",
+                "OrbitalPeriod": "732.55",
+                "Discovery year": 2021,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard, Tholen, Trujillo"
+            },
+            {
+                "Name": "S/2022 J 1",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "22,015,500",
+                "OrbitalPeriod": "667.34",
+                "Discovery year": 2022,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2022 J 2",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "22,413,200",
+                "OrbitalPeriod": "685.51",
+                "Discovery year": 2022,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "S/2022 J 3",
+                "Parent": "Jupiter",
+                "Numeral": "—",
+                "Radius": 0.5,
+                "DistanceFromParent": "20,912,400",
+                "OrbitalPeriod": "617.82",
+                "Discovery year": 2022,
+                "Year Announced": 2023,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "Mimas",
+                "Parent": "Saturn",
+                "Numeral": "I (1)",
+                "Radius": "198.2",
+                "DistanceFromParent": "185,540",
+                "OrbitalPeriod": 0.942,
+                "Discovery year": 1789,
+                "Year Announced": 1789,
+                "Discovered by": "Herschel"
+            },
+            {
+                "Name": "Enceladus",
+                "Parent": "Saturn",
+                "Numeral": "II (2)",
+                "Radius": "252.1",
+                "DistanceFromParent": "238,040",
+                "OrbitalPeriod": 1.37,
+                "Discovery year": 1789,
+                "Year Announced": 1789,
+                "Discovered by": "Herschel"
+            },
+            {
+                "Name": "Tethys",
+                "Parent": "Saturn",
+                "Numeral": "III (3)",
+                "Radius": "533.1",
+                "DistanceFromParent": "294,670",
+                "OrbitalPeriod": 1.888,
+                "Discovery year": 1684,
+                "Year Announced": 1686,
+                "Discovered by": "Cassini"
+            },
+            {
+                "Name": "Dione",
+                "Parent": "Saturn",
+                "Numeral": "IV (4)",
+                "Radius": "561.4",
+                "DistanceFromParent": "377,420",
+                "OrbitalPeriod": 2.737,
+                "Discovery year": 1684,
+                "Year Announced": 1686,
+                "Discovered by": "Cassini"
+            },
+            {
+                "Name": "Rhea",
+                "Parent": "Saturn",
+                "Numeral": "V (5)",
+                "Radius": "763.8",
+                "DistanceFromParent": "527,070",
+                "OrbitalPeriod": 4.518,
+                "Discovery year": 1672,
+                "Year Announced": 1673,
+                "Discovered by": "Cassini"
+            },
+            {
+                "Name": "Titan",
+                "Parent": "Saturn",
+                "Numeral": "VI (6)",
+                "Radius": "2574.73",
+                "DistanceFromParent": "1,221,870",
+                "OrbitalPeriod": 15.95,
+                "Discovery year": 1655,
+                "Year Announced": 1656,
+                "Discovered by": "Huygens"
+            },
+            {
+                "Name": "Hyperion",
+                "Parent": "Saturn",
+                "Numeral": "VII (7)",
+                "Radius": 135,
+                "DistanceFromParent": "1,500,880",
+                "OrbitalPeriod": 21.28,
+                "Discovery year": 1848,
+                "Year Announced": 1848,
+                "Discovered by": "W.Bond, G. Bond, and Lassell"
+            },
+            {
+                "Name": "Iapetus",
+                "Parent": "Saturn",
+                "Numeral": "VIII (8)",
+                "Radius": "735.6",
+                "DistanceFromParent": "3,560,840",
+                "OrbitalPeriod": 79.33,
+                "Discovery year": 1671,
+                "Year Announced": 1673,
+                "Discovered by": "Cassini"
+            },
+            {
+                "Name": "Phoebe",
+                "Parent": "Saturn",
+                "Numeral": "IX (9)",
+                "Radius": "106.5",
+                "DistanceFromParent": "12,947,780",
+                "OrbitalPeriod": "550.31",
+                "Discovery year": 1898,
+                "Year Announced": 1899,
+                "Discovered by": "Pickering"
+            },
+            {
+                "Name": "Janus",
+                "Parent": "Saturn",
+                "Numeral": "X (10)",
+                "Radius": "89.5",
+                "DistanceFromParent": "151,460",
+                "OrbitalPeriod": 0.695,
+                "Discovery year": 1966,
+                "Year Announced": 1967,
+                "Discovered by": "Dollfus; Voyager 1 (confirmed)"
+            },
+            {
+                "Name": "Epimetheus",
+                "Parent": "Saturn",
+                "Numeral": "XI (11)",
+                "Radius": "58.1",
+                "DistanceFromParent": "151,410",
+                "OrbitalPeriod": 0.694,
+                "Discovery year": 1966,
+                "Year Announced": 1967,
+                "Discovered by": "Walker; Voyager 1 (confirmed)"
+            },
+            {
+                "Name": "Helene",
+                "Parent": "Saturn",
+                "Numeral": "XII (12)",
+                "Radius": "17.6",
+                "DistanceFromParent": "377,420",
+                "OrbitalPeriod": 2.737,
+                "Discovery year": 1980,
+                "Year Announced": 1980,
+                "Discovered by": "Laques, Lecacheux"
+            },
+            {
+                "Name": "Telesto",
+                "Parent": "Saturn",
+                "Numeral": "XIII (13)",
+                "Radius": "12.4",
+                "DistanceFromParent": "294,710",
+                "OrbitalPeriod": 1.888,
+                "Discovery year": 1980,
+                "Year Announced": 1980,
+                "Discovered by": "Smith, Reitsema, Larson, Fountain (Voyager 1)"
+            },
+            {
+                "Name": "Calypso",
+                "Parent": "Saturn",
+                "Numeral": "XIV (14)",
+                "Radius": "10.7",
+                "DistanceFromParent": "294,710",
+                "OrbitalPeriod": 1.888,
+                "Discovery year": 1980,
+                "Year Announced": 1980,
+                "Discovered by": "Pascu, Seidelmann, Baum, Currie"
+            },
+            {
+                "Name": "Atlas",
+                "Parent": "Saturn",
+                "Numeral": "XV (15)",
+                "Radius": "15.1",
+                "DistanceFromParent": "137,670",
+                "OrbitalPeriod": 0.602,
+                "Discovery year": 1980,
+                "Year Announced": 1980,
+                "Discovered by": "Terrile (Voyager 1)"
+            },
+            {
+                "Name": "Prometheus",
+                "Parent": "Saturn",
+                "Numeral": "XVI (16)",
+                "Radius": "43.1",
+                "DistanceFromParent": "139,380",
+                "OrbitalPeriod": 0.613,
+                "Discovery year": 1980,
+                "Year Announced": 1980,
+                "Discovered by": "Collins (Voyager 1)"
+            },
+            {
+                "Name": "Pandora",
+                "Parent": "Saturn",
+                "Numeral": "XVII (17)",
+                "Radius": "40.7",
+                "DistanceFromParent": "141,720",
+                "OrbitalPeriod": 0.629,
+                "Discovery year": 1980,
+                "Year Announced": 1980,
+                "Discovered by": "Collins (Voyager 1)"
+            },
+            {
+                "Name": "Pan",
+                "Parent": "Saturn",
+                "Numeral": "XVIII (18)",
+                "Radius": 14.1,
+                "DistanceFromParent": "133,580",
+                "OrbitalPeriod": 0.575,
+                "Discovery year": 1981,
+                "Year Announced": 1990,
+                "Discovered by": "Showalter (Voyager 2)"
+            },
+            {
+                "Name": "Ymir",
+                "Parent": "Saturn",
+                "Numeral": "XIX (19)",
+                "Radius": 9,
+                "DistanceFromParent": "23,140,400",
+                "OrbitalPeriod": "1,315.58",
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman"
+            },
+            {
+                "Name": "Paaliaq",
+                "Parent": "Saturn",
+                "Numeral": "XX (20)",
+                "Radius": 11,
+                "DistanceFromParent": "15,200,000",
+                "OrbitalPeriod": 686.95,
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman"
+            },
+            {
+                "Name": "Tarvos",
+                "Parent": "Saturn",
+                "Numeral": "XXI (21)",
+                "Radius": 7.5,
+                "DistanceFromParent": "17,983,000",
+                "OrbitalPeriod": 926.23,
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Ijiraq",
+                "Parent": "Saturn",
+                "Numeral": "XXII (22)",
+                "Radius": 6,
+                "DistanceFromParent": "11,124,000",
+                "OrbitalPeriod": 451.42,
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Suttungr",
+                "Parent": "Saturn",
+                "Numeral": "XXIII (23)",
+                "Radius": 3.5,
+                "DistanceFromParent": "19,459,000",
+                "OrbitalPeriod": "1,016.67",
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Kiviuq",
+                "Parent": "Saturn",
+                "Numeral": "XXIV (24)",
+                "Radius": 8,
+                "DistanceFromParent": "11,110,000",
+                "OrbitalPeriod": 449.22,
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman"
+            },
+            {
+                "Name": "Mundilfari",
+                "Parent": "Saturn",
+                "Numeral": "XXV (25)",
+                "Radius": 3.5,
+                "DistanceFromParent": "18,628,000",
+                "OrbitalPeriod": "952.77",
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Albiorix",
+                "Parent": "Saturn",
+                "Numeral": "XXVI (26)",
+                "Radius": 16,
+                "DistanceFromParent": "16,182,000",
+                "OrbitalPeriod": 783.45,
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Holman, Spahr"
+            },
+            {
+                "Name": "Skathi",
+                "Parent": "Saturn",
+                "Numeral": "XXVII (27)",
+                "Radius": 4,
+                "DistanceFromParent": "15,540,000",
+                "OrbitalPeriod": "728.20",
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Erriapus",
+                "Parent": "Saturn",
+                "Numeral": "XXVIII (28)",
+                "Radius": 5,
+                "DistanceFromParent": "17,343,000",
+                "OrbitalPeriod": 871.19,
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Siarnaq",
+                "Parent": "Saturn",
+                "Numeral": "XXIX (29)",
+                "Radius": 20,
+                "DistanceFromParent": "18,015,400",
+                "OrbitalPeriod": 896.44,
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Thrymr",
+                "Parent": "Saturn",
+                "Numeral": "XXX (30)",
+                "Radius": 3.5,
+                "DistanceFromParent": "20,314,000",
+                "OrbitalPeriod": "1,094.11",
+                "Discovery year": 2000,
+                "Year Announced": 2000,
+                "Discovered by": "Gladman, Kavelaars"
+            },
+            {
+                "Name": "Narvi",
+                "Parent": "Saturn",
+                "Numeral": "XXXI (31)",
+                "Radius": 3.5,
+                "DistanceFromParent": "19,007,000",
+                "OrbitalPeriod": "1,003.86",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Methone",
+                "Parent": "Saturn",
+                "Numeral": "XXXII (32)",
+                "Radius": 1.45,
+                "DistanceFromParent": "194,440",
+                "OrbitalPeriod": 1.01,
+                "Discovery year": 2004,
+                "Year Announced": 2004,
+                "Discovered by": "Porco, Charnoz, Brahic, Dones (Cassini–Huygens)"
+            },
+            {
+                "Name": "Pallene",
+                "Parent": "Saturn",
+                "Numeral": "XXXIII (33)",
+                "Radius": 2.22,
+                "DistanceFromParent": "212,280",
+                "OrbitalPeriod": 1.154,
+                "Discovery year": 2004,
+                "Year Announced": 2004,
+                "Discovered by": "Gordon, Murray, Beurle, et al. (Cassini–Huygens)"
+            },
+            {
+                "Name": "Polydeuces",
+                "Parent": "Saturn",
+                "Numeral": "XXXIV (34)",
+                "Radius": 1.3,
+                "DistanceFromParent": "377,200",
+                "OrbitalPeriod": 2.737,
+                "Discovery year": 2004,
+                "Year Announced": 2004,
+                "Discovered by": "Porco et al. (Cassini–Huygens)"
+            },
+            {
+                "Name": "Daphnis",
+                "Parent": "Saturn",
+                "Numeral": "XXXV (35)",
+                "Radius": "3.8",
+                "DistanceFromParent": "136,500",
+                "OrbitalPeriod": 0.594,
+                "Discovery year": 2005,
+                "Year Announced": 2005,
+                "Discovered by": "Porco et al. (Cassini–Huygens)"
+            },
+            {
+                "Name": "Aegir",
+                "Parent": "Saturn",
+                "Numeral": "XXXVI (36)",
+                "Radius": 3,
+                "DistanceFromParent": "20,751,000",
+                "OrbitalPeriod": "1,117.52",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Bebhionn",
+                "Parent": "Saturn",
+                "Numeral": "XXXVII (37)",
+                "Radius": 3,
+                "DistanceFromParent": "17,119,000",
+                "OrbitalPeriod": 834.84,
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Bergelmir",
+                "Parent": "Saturn",
+                "Numeral": "XXXVIII (38)",
+                "Radius": 3,
+                "DistanceFromParent": "19,336,000",
+                "OrbitalPeriod": "1,005.74",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Bestla",
+                "Parent": "Saturn",
+                "Numeral": "XXXIX (39)",
+                "Radius": 3.5,
+                "DistanceFromParent": "20,192,000",
+                "OrbitalPeriod": "1,088.72",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Farbauti",
+                "Parent": "Saturn",
+                "Numeral": "XL (40)",
+                "Radius": 2.5,
+                "DistanceFromParent": "20,377,000",
+                "OrbitalPeriod": "1,085.55",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Fenrir",
+                "Parent": "Saturn",
+                "Numeral": "XLI (41)",
+                "Radius": 2,
+                "DistanceFromParent": "22,454,000",
+                "OrbitalPeriod": "1,260.35",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Fornjot",
+                "Parent": "Saturn",
+                "Numeral": "XLII (42)",
+                "Radius": 3,
+                "DistanceFromParent": "25,146,000",
+                "OrbitalPeriod": "1,494.2",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Hati",
+                "Parent": "Saturn",
+                "Numeral": "XLIII (43)",
+                "Radius": 3,
+                "DistanceFromParent": "19,846,000",
+                "OrbitalPeriod": "1,038.61",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Hyrrokkin",
+                "Parent": "Saturn",
+                "Numeral": "XLIV (44)",
+                "Radius": 4,
+                "DistanceFromParent": "18,437,000",
+                "OrbitalPeriod": "931.86",
+                "Discovery year": 2004,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Kari",
+                "Parent": "Saturn",
+                "Numeral": "XLV (45)",
+                "Radius": 3.5,
+                "DistanceFromParent": "22,089,000",
+                "OrbitalPeriod": "1,230.97",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Loge",
+                "Parent": "Saturn",
+                "Numeral": "XLVI (46)",
+                "Radius": 3,
+                "DistanceFromParent": "23,058,000",
+                "OrbitalPeriod": "1,311.36",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Skoll",
+                "Parent": "Saturn",
+                "Numeral": "XLVII (47)",
+                "Radius": 3,
+                "DistanceFromParent": "17,665,000",
+                "OrbitalPeriod": "878.29",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Surtur",
+                "Parent": "Saturn",
+                "Numeral": "XLVIII (48)",
+                "Radius": 3,
+                "DistanceFromParent": "22,704,000",
+                "OrbitalPeriod": "1,297.36",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Anthe",
+                "Parent": "Saturn",
+                "Numeral": "XLIX (49)",
+                "Radius": 0.9,
+                "DistanceFromParent": "197,700",
+                "OrbitalPeriod": 1.0365,
+                "Discovery year": 2007,
+                "Year Announced": 2007,
+                "Discovered by": "Porco et al. (Cassini–Huygens)"
+            },
+            {
+                "Name": "Jarnsaxa",
+                "Parent": "Saturn",
+                "Numeral": "L (50)",
+                "Radius": 3,
+                "DistanceFromParent": "18,811,000",
+                "OrbitalPeriod": "964.74",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Greip",
+                "Parent": "Saturn",
+                "Numeral": "LI (51)",
+                "Radius": 3,
+                "DistanceFromParent": "18,206,000",
+                "OrbitalPeriod": "921.19",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Tarqeq",
+                "Parent": "Saturn",
+                "Numeral": "LII (52)",
+                "Radius": 3.5,
+                "DistanceFromParent": "18,009,000",
+                "OrbitalPeriod": 887.48,
+                "Discovery year": 2007,
+                "Year Announced": 2007,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Aegaeon",
+                "Parent": "Saturn",
+                "Numeral": "LIII (53)",
+                "Radius": 0.33,
+                "DistanceFromParent": "167,500",
+                "OrbitalPeriod": 0.808,
+                "Discovery year": 2008,
+                "Year Announced": 2009,
+                "Discovered by": "Cassini Imaging Science Team Cassini–Huygens"
+            },
+            {
+                "Name": "Gridr",
+                "Parent": "Saturn",
+                "Numeral": "LIV (54)",
+                "Radius": 3,
+                "DistanceFromParent": "19,418,000",
+                "OrbitalPeriod": "1,010.55",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Angrboda",
+                "Parent": "Saturn",
+                "Numeral": "LV (55)",
+                "Radius": 3,
+                "DistanceFromParent": "20,636,000",
+                "OrbitalPeriod": "1,107.13",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Skrymir",
+                "Parent": "Saturn",
+                "Numeral": "LVI (56)",
+                "Radius": 4,
+                "DistanceFromParent": "21,163,000",
+                "OrbitalPeriod": "1,149.82",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Gerd",
+                "Parent": "Saturn",
+                "Numeral": "LVII (57)",
+                "Radius": 4,
+                "DistanceFromParent": "21,174,000",
+                "OrbitalPeriod": "1,150.69",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2004 S 26",
+                "Parent": "Saturn",
+                "Numeral": "LVIII (58)",
+                "Radius": 4,
+                "DistanceFromParent": "26,676,000",
+                "OrbitalPeriod": "1,627.18",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Eggther",
+                "Parent": "Saturn",
+                "Numeral": "LIX (59)",
+                "Radius": 6,
+                "DistanceFromParent": "19,976,000",
+                "OrbitalPeriod": "1,054.45",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden, Jacobson"
+            },
+            {
+                "Name": "S/2004 S 29",
+                "Parent": "Saturn",
+                "Numeral": "LX (60)",
+                "Radius": 4,
+                "DistanceFromParent": "16,981,000",
+                "OrbitalPeriod": 826.44,
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Beli",
+                "Parent": "Saturn",
+                "Numeral": "LXI (61)",
+                "Radius": 3,
+                "DistanceFromParent": "20,396,000",
+                "OrbitalPeriod": "1,087.84",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Gunnlod",
+                "Parent": "Saturn",
+                "Numeral": "LXII (62)",
+                "Radius": 4,
+                "DistanceFromParent": "21,214,000",
+                "OrbitalPeriod": "1,153.96",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Thiazzi",
+                "Parent": "Saturn",
+                "Numeral": "LXIII (63)",
+                "Radius": 4,
+                "DistanceFromParent": "24,168,000",
+                "OrbitalPeriod": "1,403.18",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2004 S 34",
+                "Parent": "Saturn",
+                "Numeral": "LXIV (64)",
+                "Radius": 3,
+                "DistanceFromParent": "24,299,000",
+                "OrbitalPeriod": "1,414.59",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "Alvaldi",
+                "Parent": "Saturn",
+                "Numeral": "LXV (65)",
+                "Radius": 6,
+                "DistanceFromParent": "22,412,000",
+                "OrbitalPeriod": "1,253.08",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "Geirrod",
+                "Parent": "Saturn",
+                "Numeral": "LXVI (66)",
+                "Radius": 4,
+                "DistanceFromParent": "21,908,000",
+                "OrbitalPeriod": "1,211.02",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2004 S 3",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": "2",
+                "DistanceFromParent": "140,600",
+                "OrbitalPeriod": 0.62,
+                "Discovery year": 2004,
+                "Year Announced": 2004,
+                "Discovered by": "Cassini Imaging Science Team Cassini-Huygens"
+            },
+            {
+                "Name": "S/2004 S 4",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": "2",
+                "DistanceFromParent": "140,100",
+                "OrbitalPeriod": 0.618,
+                "Discovery year": 2004,
+                "Year Announced": 2004,
+                "Discovered by": "Cassini Imaging Science Team Cassini-Huygens"
+            },
+            {
+                "Name": "S/2004 S 6",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": "2",
+                "DistanceFromParent": "140,134",
+                "OrbitalPeriod": 0.618,
+                "Discovery year": 2004,
+                "Year Announced": 2004,
+                "Discovered by": "Cassini-Huygens"
+            },
+            {
+                "Name": "S/2004 S 7",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "20,999,000",
+                "OrbitalPeriod": "1,140.24",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "S/2004 S 12",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 2.5,
+                "DistanceFromParent": "19,878,000",
+                "OrbitalPeriod": "1,046.19",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "S/2004 S 13",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "18,404,000",
+                "OrbitalPeriod": "933.48",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "S/2004 S 17",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 2,
+                "DistanceFromParent": "19,447,000",
+                "OrbitalPeriod": "1,014.70",
+                "Discovery year": 2004,
+                "Year Announced": 2005,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "S/2004 S 21",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "22,645,000",
+                "OrbitalPeriod": "1,272.61",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2004 S 24",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "22,901,000",
+                "OrbitalPeriod": "1,294.25",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "S/2004 S 28",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 4,
+                "DistanceFromParent": "22,020,000",
+                "OrbitalPeriod": "1,220.31",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "S/2004 S 31",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 4,
+                "DistanceFromParent": "17,568,000",
+                "OrbitalPeriod": 869.65,
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna, Marsden"
+            },
+            {
+                "Name": "S/2004 S 36",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "23,192,000",
+                "OrbitalPeriod": "1,319.07",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2004 S 37",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 4,
+                "DistanceFromParent": "15,892,000",
+                "OrbitalPeriod": "748.18",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2004 S 39",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "23,575,000",
+                "OrbitalPeriod": "1,351.83",
+                "Discovery year": 2004,
+                "Year Announced": 2019,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2006 S 1",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "18,790,000",
+                "OrbitalPeriod": "963.37",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2006 S 3",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "22,096,000",
+                "OrbitalPeriod": "1,227.21",
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2007 S 2",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "16,725,000",
+                "OrbitalPeriod": "808.08",
+                "Discovery year": 2007,
+                "Year Announced": 2007,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2007 S 3",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "18,975,000",
+                "OrbitalPeriod": "977.8",
+                "Discovery year": 2007,
+                "Year Announced": 2007,
+                "Discovered by": "Sheppard, Jewitt, Kleyna"
+            },
+            {
+                "Name": "S/2009 S 1",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 0.15,
+                "DistanceFromParent": "117,000",
+                "OrbitalPeriod": 0.471,
+                "Discovery year": 2009,
+                "Year Announced": 2009,
+                "Discovered by": "Cassini Imaging Science Team Cassini–Huygens"
+            },
+            {
+                "Name": "S/2019 S 1",
+                "Parent": "Saturn",
+                "Numeral": "—",
+                "Radius": 3,
+                "DistanceFromParent": "11,221,000",
+                "OrbitalPeriod": 443.8,
+                "Discovery year": 2019,
+                "Year Announced": 2021,
+                "Discovered by": "Ashton, Gladman, Petit, Alexandersen"
+            },
+            {
+                "Name": "Ariel",
+                "Parent": "Uranus",
+                "Numeral": "I (1)",
+                "Radius": "578.9",
+                "DistanceFromParent": "190,900",
+                "OrbitalPeriod": 2.52,
+                "Discovery year": 1851,
+                "Year Announced": 1851,
+                "Discovered by": "Lassell"
+            },
+            {
+                "Name": "Umbriel",
+                "Parent": "Uranus",
+                "Numeral": "II (2)",
+                "Radius": "584.7",
+                "DistanceFromParent": "266,000",
+                "OrbitalPeriod": 4.144,
+                "Discovery year": 1851,
+                "Year Announced": 1851,
+                "Discovered by": "Lassell"
+            },
+            {
+                "Name": "Titania",
+                "Parent": "Uranus",
+                "Numeral": "III (3)",
+                "Radius": "788.9",
+                "DistanceFromParent": "436,300",
+                "OrbitalPeriod": 8.706,
+                "Discovery year": 1787,
+                "Year Announced": 1787,
+                "Discovered by": "Herschel"
+            },
+            {
+                "Name": "Oberon",
+                "Parent": "Uranus",
+                "Numeral": "IV (4)",
+                "Radius": "761.4",
+                "DistanceFromParent": "583,500",
+                "OrbitalPeriod": 13.46,
+                "Discovery year": 1787,
+                "Year Announced": 1787,
+                "Discovered by": "Herschel"
+            },
+            {
+                "Name": "Miranda",
+                "Parent": "Uranus",
+                "Numeral": "V (5)",
+                "Radius": "235.8",
+                "DistanceFromParent": "129,900",
+                "OrbitalPeriod": 1.413,
+                "Discovery year": 1948,
+                "Year Announced": 1949,
+                "Discovered by": "Kuiper"
+            },
+            {
+                "Name": "Cordelia",
+                "Parent": "Uranus",
+                "Numeral": "VI (6)",
+                "Radius": "20.1",
+                "DistanceFromParent": "49,800",
+                "OrbitalPeriod": 0.335,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Terrile (Voyager 2)"
+            },
+            {
+                "Name": "Ophelia",
+                "Parent": "Uranus",
+                "Numeral": "VII (7)",
+                "Radius": "21.4",
+                "DistanceFromParent": "53,800",
+                "OrbitalPeriod": 0.376,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Terrile (Voyager 2)"
+            },
+            {
+                "Name": "Bianca",
+                "Parent": "Uranus",
+                "Numeral": "VIII (8)",
+                "Radius": "25.7",
+                "DistanceFromParent": "59,200",
+                "OrbitalPeriod": 0.435,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Smith (Voyager 2)"
+            },
+            {
+                "Name": "Cressida",
+                "Parent": "Uranus",
+                "Numeral": "IX (9)",
+                "Radius": "39.8",
+                "DistanceFromParent": "61,800",
+                "OrbitalPeriod": 0.464,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Desdemona",
+                "Parent": "Uranus",
+                "Numeral": "X (10)",
+                "Radius": "32",
+                "DistanceFromParent": "62,700",
+                "OrbitalPeriod": 0.474,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Juliet",
+                "Parent": "Uranus",
+                "Numeral": "XI (11)",
+                "Radius": "46.8",
+                "DistanceFromParent": "64,400",
+                "OrbitalPeriod": 0.493,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Portia",
+                "Parent": "Uranus",
+                "Numeral": "XII (12)",
+                "Radius": "67.6",
+                "DistanceFromParent": "66,100",
+                "OrbitalPeriod": 0.513,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Rosalind",
+                "Parent": "Uranus",
+                "Numeral": "XIII (13)",
+                "Radius": "36",
+                "DistanceFromParent": "69,900",
+                "OrbitalPeriod": 0.558,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Belinda",
+                "Parent": "Uranus",
+                "Numeral": "XIV (14)",
+                "Radius": "40.3",
+                "DistanceFromParent": "75,300",
+                "OrbitalPeriod": 0.624,
+                "Discovery year": 1986,
+                "Year Announced": 1986,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Puck",
+                "Parent": "Uranus",
+                "Numeral": "XV (15)",
+                "Radius": "81",
+                "DistanceFromParent": "86,000",
+                "OrbitalPeriod": 0.762,
+                "Discovery year": 1985,
+                "Year Announced": 1986,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Caliban",
+                "Parent": "Uranus",
+                "Numeral": "XVI (16)",
+                "Radius": 36.4,
+                "DistanceFromParent": "7,231,100",
+                "OrbitalPeriod": "579.73",
+                "Discovery year": 1997,
+                "Year Announced": 1997,
+                "Discovered by": "Gladman, Nicholson, Burns, Kavelaars"
+            },
+            {
+                "Name": "Sycorax",
+                "Parent": "Uranus",
+                "Numeral": "XVII (17)",
+                "Radius": 93,
+                "DistanceFromParent": "12,179,400",
+                "OrbitalPeriod": "1,288.38",
+                "Discovery year": 1997,
+                "Year Announced": 1997,
+                "Discovered by": "Gladman, Nicholson, Burns, Kavelaars"
+            },
+            {
+                "Name": "Prospero",
+                "Parent": "Uranus",
+                "Numeral": "XVIII (18)",
+                "Radius": 25,
+                "DistanceFromParent": "16,256,000",
+                "OrbitalPeriod": "1,978.29",
+                "Discovery year": 1999,
+                "Year Announced": 1999,
+                "Discovered by": "Gladman, Holman, Kavelaars, Petit, Scholl"
+            },
+            {
+                "Name": "Setebos",
+                "Parent": "Uranus",
+                "Numeral": "XIX (19)",
+                "Radius": 24,
+                "DistanceFromParent": "17,418,000",
+                "OrbitalPeriod": "2,225.21",
+                "Discovery year": 1999,
+                "Year Announced": 1999,
+                "Discovered by": "Gladman, Holman, Kavelaars, Petit, Scholl"
+            },
+            {
+                "Name": "Stephano",
+                "Parent": "Uranus",
+                "Numeral": "XX (20)",
+                "Radius": 16,
+                "DistanceFromParent": "8,004,000",
+                "OrbitalPeriod": "677.36",
+                "Discovery year": 1999,
+                "Year Announced": 1999,
+                "Discovered by": "Gladman, Holman, Kavelaars, Petit, Scholl"
+            },
+            {
+                "Name": "Trinculo",
+                "Parent": "Uranus",
+                "Numeral": "XXI (21)",
+                "Radius": 9.5,
+                "DistanceFromParent": "8,504,000",
+                "OrbitalPeriod": "749.24",
+                "Discovery year": 2001,
+                "Year Announced": 2002,
+                "Discovered by": "Holman, Kavelaars, Milisavljevic"
+            },
+            {
+                "Name": "Francisco",
+                "Parent": "Uranus",
+                "Numeral": "XXII (22)",
+                "Radius": 11,
+                "DistanceFromParent": "4,276,000",
+                "OrbitalPeriod": "266.56",
+                "Discovery year": 2001,
+                "Year Announced": 2003,
+                "Discovered by": "Holman, Kavelaars, Milisavljevic, Gladman"
+            },
+            {
+                "Name": "Margaret",
+                "Parent": "Uranus",
+                "Numeral": "XXIII (23)",
+                "Radius": 10,
+                "DistanceFromParent": "14,345,000",
+                "OrbitalPeriod": "1,687.01",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Sheppard, Jewitt"
+            },
+            {
+                "Name": "Ferdinand",
+                "Parent": "Uranus",
+                "Numeral": "XXIV (24)",
+                "Radius": 10,
+                "DistanceFromParent": "20,901,000",
+                "OrbitalPeriod": "2,887.21",
+                "Discovery year": 2001,
+                "Year Announced": 2003,
+                "Discovered by": "Holman, Kavelaars, Milisavljevic, et al."
+            },
+            {
+                "Name": "Perdita",
+                "Parent": "Uranus",
+                "Numeral": "XXV (25)",
+                "Radius": 15,
+                "DistanceFromParent": "76,417",
+                "OrbitalPeriod": 0.638,
+                "Discovery year": 1986,
+                "Year Announced": "1999/2003",
+                "Discovered by": "Karkoschka (Voyager 2)"
+            },
+            {
+                "Name": "Mab",
+                "Parent": "Uranus",
+                "Numeral": "XXVI (26)",
+                "Radius": 12,
+                "DistanceFromParent": "97,736",
+                "OrbitalPeriod": 0.923,
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Showalter, Lissauer"
+            },
+            {
+                "Name": "Cupid",
+                "Parent": "Uranus",
+                "Numeral": "XXVII (27)",
+                "Radius": 9,
+                "DistanceFromParent": "74,392",
+                "OrbitalPeriod": 0.613,
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Showalter, Lissauer"
+            },
+            {
+                "Name": "Triton",
+                "Parent": "Neptune",
+                "Numeral": "I (1)",
+                "Radius": "1353.4",
+                "DistanceFromParent": "354,800",
+                "OrbitalPeriod": "5.877",
+                "Discovery year": 1846,
+                "Year Announced": 1846,
+                "Discovered by": "Lassell"
+            },
+            {
+                "Name": "Nereid",
+                "Parent": "Neptune",
+                "Numeral": "II (2)",
+                "Radius": "170",
+                "DistanceFromParent": "5,513,820",
+                "OrbitalPeriod": 360.14,
+                "Discovery year": 1949,
+                "Year Announced": 1949,
+                "Discovered by": "Kuiper"
+            },
+            {
+                "Name": "Naiad",
+                "Parent": "Neptune",
+                "Numeral": "III (3)",
+                "Radius": "33",
+                "DistanceFromParent": "48,224",
+                "OrbitalPeriod": 0.294,
+                "Discovery year": 1989,
+                "Year Announced": 1989,
+                "Discovered by": "Terrile (Voyager 2)"
+            },
+            {
+                "Name": "Thalassa",
+                "Parent": "Neptune",
+                "Numeral": "IV (4)",
+                "Radius": "41",
+                "DistanceFromParent": "50,075",
+                "OrbitalPeriod": 0.311,
+                "Discovery year": 1989,
+                "Year Announced": 1989,
+                "Discovered by": "Terrile (Voyager 2)"
+            },
+            {
+                "Name": "Despina",
+                "Parent": "Neptune",
+                "Numeral": "V (5)",
+                "Radius": "78",
+                "DistanceFromParent": "52,526",
+                "OrbitalPeriod": 0.335,
+                "Discovery year": 1989,
+                "Year Announced": 1989,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Galatea",
+                "Parent": "Neptune",
+                "Numeral": "VI (6)",
+                "Radius": "88",
+                "DistanceFromParent": "61,953",
+                "OrbitalPeriod": 0.429,
+                "Discovery year": 1989,
+                "Year Announced": 1989,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Larissa",
+                "Parent": "Neptune",
+                "Numeral": "VII (7)",
+                "Radius": "97",
+                "DistanceFromParent": "73,548",
+                "OrbitalPeriod": 0.555,
+                "Discovery year": "1981/1989",
+                "Year Announced": "1981/1989",
+                "Discovered by": "Reitsema, Hubbard, Lebofsky, Tholen (Voyager 2)"
+            },
+            {
+                "Name": "Proteus",
+                "Parent": "Neptune",
+                "Numeral": "VIII (8)",
+                "Radius": "210",
+                "DistanceFromParent": "117,647",
+                "OrbitalPeriod": 1.122,
+                "Discovery year": 1989,
+                "Year Announced": 1989,
+                "Discovered by": "Synnott (Voyager 2)"
+            },
+            {
+                "Name": "Halimede",
+                "Parent": "Neptune",
+                "Numeral": "IX (9)",
+                "Radius": 31,
+                "DistanceFromParent": "15,728,000",
+                "OrbitalPeriod": "1,879.71",
+                "Discovery year": 2002,
+                "Year Announced": 2003,
+                "Discovered by": "Holman, Kavelaars, Grav, Fraser, Milisavljevic"
+            },
+            {
+                "Name": "Psamathe",
+                "Parent": "Neptune",
+                "Numeral": "X (10)",
+                "Radius": 20,
+                "DistanceFromParent": "46,695,000",
+                "OrbitalPeriod": "9,115.91",
+                "Discovery year": 2003,
+                "Year Announced": 2003,
+                "Discovered by": "Jewitt, Kleyna, Sheppard, Holman, Kavelaars"
+            },
+            {
+                "Name": "Sao",
+                "Parent": "Neptune",
+                "Numeral": "XI (11)",
+                "Radius": 22,
+                "DistanceFromParent": "22,422,000",
+                "OrbitalPeriod": "2,914.07",
+                "Discovery year": 2002,
+                "Year Announced": 2003,
+                "Discovered by": "Holman, Kavelaars, Grav, Fraser, Milisavljevic"
+            },
+            {
+                "Name": "Laomedeia",
+                "Parent": "Neptune",
+                "Numeral": "XII (12)",
+                "Radius": 21,
+                "DistanceFromParent": "23,571,000",
+                "OrbitalPeriod": "3,167.85",
+                "Discovery year": 2002,
+                "Year Announced": 2003,
+                "Discovered by": "Holman, Kavelaars, Grav, Fraser, Milisavljevic"
+            },
+            {
+                "Name": "Neso",
+                "Parent": "Neptune",
+                "Numeral": "XIII (13)",
+                "Radius": 30,
+                "DistanceFromParent": "48,387,000",
+                "OrbitalPeriod": "9,740.73",
+                "Discovery year": 2002,
+                "Year Announced": 2003,
+                "Discovered by": "Holman, Kavelaars, Grav, Fraser, Milisavljevic"
+            },
+            {
+                "Name": "Hippocamp",
+                "Parent": "Neptune",
+                "Numeral": "XIV (14)",
+                "Radius": 17.4,
+                "DistanceFromParent": "105,283",
+                "OrbitalPeriod": 0.9362,
+                "Discovery year": "2004/2013",
+                "Year Announced": 2013,
+                "Discovered by": "Showalter et al."
+            },
+            {
+                "Name": "c02N4",
+                "Parent": "Neptune",
+                "Numeral": "—",
+                "Radius": 16.5,
+                "DistanceFromParent": "25,100,000",
+                "OrbitalPeriod": "?",
+                "Discovery year": 2002,
+                "Year Announced": 2002,
+                "Discovered by": "Holman"
+            },
+            {
+                "Name": "Vanth",
+                "Parent": "Orcus",
+                "Numeral": "I (1)",
+                "Radius": "221",
+                "DistanceFromParent": "9,000",
+                "OrbitalPeriod": 9.539,
+                "Discovery year": 2005,
+                "Year Announced": 2007,
+                "Discovered by": "Brown & Suer"
+            },
+            {
+                "Name": "S/2005 (208996) 1",
+                "Parent": "2003 AZ84",
+                "Numeral": "—",
+                "Radius": "72",
+                "DistanceFromParent": "7,200",
+                "OrbitalPeriod": "12",
+                "Discovery year": 2005,
+                "Year Announced": 2007,
+                "Discovered by": "Brown & Suer"
+            },
+            {
+                "Name": "Charon",
+                "Parent": "Pluto",
+                "Numeral": "I (1)",
+                "Radius": "606",
+                "DistanceFromParent": "19,591",
+                "OrbitalPeriod": 6.387,
+                "Discovery year": 1978,
+                "Year Announced": 1978,
+                "Discovered by": "Christy"
+            },
+            {
+                "Name": "Nix",
+                "Parent": "Pluto",
+                "Numeral": "II (2)",
+                "Radius": 22.5,
+                "DistanceFromParent": "48,671",
+                "OrbitalPeriod": 24.85,
+                "Discovery year": 2005,
+                "Year Announced": 2005,
+                "Discovered by": "Weaver, Stern, Buie, et al."
+            },
+            {
+                "Name": "Hydra",
+                "Parent": "Pluto",
+                "Numeral": "III (3)",
+                "Radius": 27.5,
+                "DistanceFromParent": "64,698",
+                "OrbitalPeriod": 38.2,
+                "Discovery year": 2005,
+                "Year Announced": 2005,
+                "Discovered by": "Weaver, Stern, Buie, et al."
+            },
+            {
+                "Name": "Kerberos",
+                "Parent": "Pluto",
+                "Numeral": "IV (4)",
+                "Radius": 7,
+                "DistanceFromParent": "57,729",
+                "OrbitalPeriod": 32.17,
+                "Discovery year": 2011,
+                "Year Announced": 2011,
+                "Discovered by": "Showalter (Hubble)"
+            },
+            {
+                "Name": "Styx",
+                "Parent": "Pluto",
+                "Numeral": "V (5)",
+                "Radius": 5.5,
+                "DistanceFromParent": "42,393",
+                "OrbitalPeriod": 20.16,
+                "Discovery year": 2012,
+                "Year Announced": 2012,
+                "Discovered by": "Showalter (Hubble)"
+            },
+            {
+                "Name": "Actaea",
+                "Parent": "Salacia",
+                "Numeral": "I (1)",
+                "Radius": "142",
+                "DistanceFromParent": "5,724",
+                "OrbitalPeriod": 5.494,
+                "Discovery year": 2006,
+                "Year Announced": 2006,
+                "Discovered by": "Noll et al."
+            },
+            {
+                "Name": "Hi`iaka",
+                "Parent": "Haumea",
+                "Numeral": "I (1)",
+                "Radius": "160",
+                "DistanceFromParent": "49,880",
+                "OrbitalPeriod": 49.12,
+                "Discovery year": 2005,
+                "Year Announced": 2005,
+                "Discovered by": "Brown et al."
+            },
+            {
+                "Name": "Namaka",
+                "Parent": "II (2)",
+                "Numeral": "85",
+                "Radius": "25657",
+                "DistanceFromParent": 18.2783,
+                "OrbitalPeriod": 2005,
+                "Discovery year": 2005,
+                "Year Announced": "Brown et al.",
+                "Discovered by": "assuming a chaotic rotation"
+            },
+            {
+                "Name": "Weywot",
+                "Parent": "Quaoar",
+                "Numeral": "I (1)",
+                "Radius": 37,
+                "DistanceFromParent": "14,500",
+                "OrbitalPeriod": 12.438,
+                "Discovery year": 2006,
+                "Year Announced": 2007,
+                "Discovered by": "Brown"
+            },
+            {
+                "Name": "S/2015 (136472) 1",
+                "Parent": "Makemake",
+                "Numeral": "—",
+                "Radius": "87.5",
+                "DistanceFromParent": ">21,000",
+                "OrbitalPeriod": ">12.4",
+                "Discovery year": 2015,
+                "Year Announced": 2016,
+                "Discovered by": "Parker et al."
+            },
+            {
+                "Name": "Ilmarë",
+                "Parent": "Varda",
+                "Numeral": "I (1)",
+                "Radius": "163]",
+                "DistanceFromParent": "4,809",
+                "OrbitalPeriod": 5.751,
+                "Discovery year": 2009,
+                "Year Announced": 2011,
+                "Discovered by": "Noll et al."
+            },
+            {
+                "Name": "S/2018 (532037) 1",
+                "Parent": "2013 FY27",
+                "Numeral": "—",
+                "Radius": "93",
+                "DistanceFromParent": ">9,800 ± 40",
+                "OrbitalPeriod": "19",
+                "Discovery year": 2018,
+                "Year Announced": 2018,
+                "Discovered by": "Sheppard"
+            },
+            {
+                "Name": "Xiangliu",
+                "Parent": "Gonggong",
+                "Numeral": "I (1)",
+                "Radius": "<100[97]",
+                "DistanceFromParent": "24,020",
+                "OrbitalPeriod": 25.221,
+                "Discovery year": 2010,
+                "Year Announced": 2016,
+                "Discovered by": "Marton, Kiss & Müller"
+            },
+            {
+                "Name": "Dysnomia",
+                "Parent": "Eris",
+                "Numeral": "I (1)",
+                "Radius": "350]",
+                "DistanceFromParent": "37,273",
+                "OrbitalPeriod": 15.786,
+                "Discovery year": 2005,
+                "Year Announced": 2005,
+                "Discovered by": "Brown, Rabinowitz, Trujillo et al."
+            }
+        ];
     }
 }
 
