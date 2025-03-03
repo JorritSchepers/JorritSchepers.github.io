@@ -36,11 +36,13 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
 
         header {
             text-align: center;
             padding: 40px 0;
+            max-width: 100%;
         }
 
         header h1 {
@@ -59,13 +61,20 @@
             text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
         }
 
+        header p {
+            margin: 0 auto;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+
         .projects {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(min(100%, 550px), 1fr));
             gap: 20px;
             padding: 20px 0;
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
+            overflow: hidden;
         }
 
         .project-card {
@@ -74,6 +83,11 @@
             border-radius: 8px;
             padding: 20px;
             transition: transform 0.2s, background-color 0.3s, border-color 0.3s;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .project-card:hover {
@@ -243,6 +257,176 @@
             height: 16px;
             fill: currentColor;
         }
+
+        .project-card.expanded {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .project-image {
+            display: block;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            position: absolute;
+            visibility: hidden;
+        }
+        
+        .project-card.expanded .project-image {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+            margin: auto;
+            visibility: visible;
+        }
+
+        .project-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-details {
+            display: block;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 0;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .project-card.expanded .project-details {
+            opacity: 1;
+            transform: translateY(0);
+            height: auto;
+        }
+
+        /* Add stagger effect for list items */
+        .project-details ul li {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card.expanded .project-details ul li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stagger the animation for each li element */
+        .project-card.expanded .project-details ul li:nth-child(1) { transition-delay: 0.1s; }
+        .project-card.expanded .project-details ul li:nth-child(2) { transition-delay: 0.15s; }
+        .project-card.expanded .project-details ul li:nth-child(3) { transition-delay: 0.2s; }
+        .project-card.expanded .project-details ul li:nth-child(4) { transition-delay: 0.25s; }
+        .project-card.expanded .project-details ul li:nth-child(5) { transition-delay: 0.3s; }
+        .project-card.expanded .project-details ul li:nth-child(6) { transition-delay: 0.35s; }
+
+        /* Smooth collapse animation */
+        .project-card:not(.expanded) .project-details,
+        .project-card:not(.expanded) .project-image {
+            transition-duration: 0.3s;
+            transition-delay: 0s;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;  /* Force single column on mobile */
+                gap: 15px;
+                padding: 15px 0;
+            }
+
+            .project-card {
+                margin: 0;
+                width: 100%;
+            }
+
+            .project-card.expanded {
+                grid-template-columns: 1fr;  /* Stack content on mobile */
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .project-image {
+                height: 200px;
+                width: 100%;
+                margin: 0;
+            }
+
+            .project-card.expanded .project-image {
+                margin: 0;
+                width: 100%;
+                height: 200px;
+            }
+
+            .project-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .tag {
+                margin: 0;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 0.8em;
+            }
+
+            .social-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .social-link {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Add styles for even smaller screens */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .project-card {
+                padding: 15px;
+            }
+
+            .project-card.expanded {
+                padding: 15px;
+            }
+
+            .project-image {
+                height: 150px;
+            }
+
+            .project-card.expanded .project-image {
+                height: 150px;
+            }
+        }
     </style>
 </head>
 
@@ -275,66 +459,117 @@
 
     <main class="projects">
         <div class="project-card highlighted">
-            <span class="highlight-badge">Highlighted</span>
-            <h3>SolarSim</h3>
-            <p>An interactive simulation of the solar system, built with Angular and Three.js. Includes all 200+ moons,
-                the 5,000 brightest celestial objects, and 9 constellations.</p>
-            <div class="project-tags">
-                <span class="tag">Angular</span>
-                <span class="tag">Three.js</span>
+            <div class="project-content">
+                <span class="highlight-badge">Highlighted</span>
+                <h3>SolarSim</h3>
+                <p>An interactive simulation of the solar system, built with Angular and Three.js. Includes all 200+ moons,
+                    the 5,000 brightest celestial objects, and 9 constellations.</p>
+                <div class="project-tags">
+                    <span class="tag">Angular</span>
+                    <span class="tag">Three.js</span>
+                    <span class="tag">WebGL</span>
+                    <span class="tag">TypeScript</span>
+                </div>
+                <div class="project-details">
+                    <h4>Project Overview</h4>
+                    <p>SolarSim is a comprehensive solar system visualization tool that brings the cosmos to your browser. Key features include:</p>
+                    <ul>
+                        <li>Accurate 3D models of all planets and major moons</li>
+                        <li>Real-time orbital mechanics simulation</li>
+                        <li>Interactive camera controls with zoom and pan</li>
+                        <li>Detailed information panels for celestial bodies</li>
+                        <li>Constellation visualization with star mapping</li>
+                        <li>Time controls for speeding up/slowing down orbital motion</li>
+                    </ul>
+                    <p>Built with performance in mind, the application uses WebGL through Three.js for smooth rendering of complex 3D scenes, while Angular provides a robust framework for the user interface and state management.</p>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/JorritSchepers/SolarSimThreeJs" target="_blank" class="github-link">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        View Code
+                    </a>
+                    <a href="https://jorritschepers.github.io/solarsim/" target="_blank" class="try-link">Try it out →</a>
+                </div>
             </div>
-            <div class="project-links">
-                <a href="https://github.com/JorritSchepers/SolarSimThreeJs" target="_blank" class="github-link">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                    View Code
-                </a>
-                <a href="https://jorritschepers.github.io/solarsim/" target="_blank" class="try-link">Try it out →</a>
-            </div>
+            <img src="./assets/solarsim.png" alt="SolarSim Preview" class="project-image">
         </div>
 
         <div class="project-card">
-            <h3>SolarSim (Unity version)</h3>
-            <p>A physics-driven solar system simulation built with the Unity game engine, featuring gravity simulation
-                for dynamic and chaotic interactions. Developed as a school project.</p>
-            <div class="project-tags">
-                <span class="tag">Unity</span>
-                <span class="tag">C#</span>
-                <span class="tag">Gravity simulation</span>
+            <div class="project-content">
+                <h3>SolarSim (Unity version)</h3>
+                <p>A physics-driven solar system simulation built with the Unity game engine, featuring gravity simulation
+                    for dynamic and chaotic interactions. Developed as a school project.</p>
+                <div class="project-tags">
+                    <span class="tag">Unity</span>
+                    <span class="tag">C#</span>
+                    <span class="tag">Physics</span>
+                    <span class="tag">Gravity simulation</span>
+                </div>
+                <div class="project-details">
+                    <h4>Project Overview</h4>
+                    <p>This Unity-based version of SolarSim focuses on accurate physics simulation of celestial bodies. Key features include:</p>
+                    <ul>
+                        <li>Real-time gravity calculations between all bodies</li>
+                        <li>Customizable mass and velocity settings</li>
+                        <li>Dynamic orbit visualization</li>
+                        <li>Interactive camera system</li>
+                        <li>Ability to create and destroy celestial bodies</li>
+                        <li>Time control system for simulation speed</li>
+                    </ul>
+                    <p>The project demonstrates the capabilities of Unity's physics engine while providing an educational tool for understanding orbital mechanics and gravitational interactions.</p>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/JorritSchepers/SolarSimUnity" target="_blank" class="github-link">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        View Code
+                    </a>
+                    <a href="https://jorritschepers.github.io/solarsimunity/" target="_blank" class="try-link">Try it out →</a>
+                </div>
             </div>
-            <div class="project-links">
-                <a href="https://github.com/JorritSchepers/SolarSimUnity" target="_blank" class="github-link">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                    View Code
-                </a>
-                <a href="https://jorritschepers.github.io/solarsimunity/" target="_blank" class="try-link">Try it out
-                    →</a>
-            </div>
+            <img src="./assets/solarsim-unity.png" alt="SolarSim Unity Preview" class="project-image">
         </div>
 
         <div class="project-card">
-            <h3>Zandt Productions Portfolio</h3>
-            <p>An interactive portfolio built with Angular and Three.js for a video editor to showcase his work and school projects. Designed to highlight creativity and technical skills.</p>
-            <div class="project-tags">
-                <span class="tag">Angular</span>
-                <span class="tag">Three.js</span>
+            <div class="project-content">
+                <h3>Zandt Productions Portfolio</h3>
+                <p>An interactive portfolio built with Angular and Three.js for a video editor to showcase his work and school projects. Designed to highlight creativity and technical skills.</p>
+                <div class="project-tags">
+                    <span class="tag">Angular</span>
+                    <span class="tag">Three.js</span>
+                    <span class="tag">WebGL</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Video Production</span>
+                </div>
+                <div class="project-details">
+                    <h4>Project Overview</h4>
+                    <p>A dynamic portfolio website that showcases video production work through an immersive 3D experience. Key features include:</p>
+                    <ul>
+                        <li>Interactive 3D environment for project navigation</li>
+                        <li>Seamless video integration and playback</li>
+                        <li>Custom shader effects and transitions</li>
+                        <li>Responsive design for all devices</li>
+                        <li>Dynamic content loading system</li>
+                        <li>Optimized performance for media-heavy content</li>
+                    </ul>
+                    <p>The project combines creative design with technical excellence, utilizing Three.js for 3D visualization and Angular for robust application architecture.</p>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/JorritSchepers/Zandt-Productions-Portfolio" target="_blank" class="github-link">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        View Code
+                    </a>
+                    <a href="https://zandtproductions.github.io/" target="_blank" class="try-link">Try it out →</a>
+                </div>
             </div>
-            <div class="project-links">
-                <a href="https://github.com/JorritSchepers/Zandt-Productions-Portfolio" target="_blank" class="github-link">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                    View Code
-                </a>
-                <a href="https://zandtproductions.github.io/" target="_blank" class="try-link">Try it out
-                    →</a>
-            </div>
+            <img src="./assets/zandt-productions.png" alt="Zandt Productions Portfolio Preview" class="project-image">
         </div>
 
     </main>
@@ -364,6 +599,23 @@
         function updateThemeIcon(theme) {
             themeIcon.textContent = theme === 'light' ? '🌞' : '🌙';
         }
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Don't expand if clicking on links
+                if (e.target.closest('a')) return;
+                
+                // Remove expanded class from other cards
+                document.querySelectorAll('.project-card').forEach(otherCard => {
+                    if (otherCard !== card) {
+                        otherCard.classList.remove('expanded');
+                    }
+                });
+                
+                // Toggle expanded class on clicked card
+                card.classList.toggle('expanded');
+            });
+        });
     </script>
 </body>
 
